@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>News – AmberStream Energy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page-frame">
+
+  <!-- Header -->
+  <table class="hdr"><tr><td class="hdr-cell">
+    <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+    <div class="hdr-text"><h1>AmberStream</h1>
+      <p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p>
+    </div>
+  </td></tr></table>
+
+  <!-- Ticker -->
+  <table class="ticker"><tr><td class="ticker-cell">
+    <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
+      <strong>Energy Price Ticker:</strong>
+      &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
+      <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
+    </marquee>
+  </td></tr></table>
+  <script>
+fetch('/api/plans').then(res => res.json()).then(data => {
+  if(data.cheapest !== undefined && data.cheapest !== null) {
+    document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
+  } else {
+    document.getElementById('amberstreamPrice').textContent = 'N/A';
+  }
+});
+</script>
+
+  <!-- Navigation -->
+  <table class="nav"><tr class="nav-row" align="center">
+    <td><a href="AmberStream.html">Home</a></td>
+    <td><a href="about.html">About AmberStream</a></td>
+    <td><a href="services.html">Services</a></td>
+    <td><a href="plans.html">Electricity Plans</a></td>
+    <td><a href="sustainability.html">Sustainability</a></td>
+    <td><a class="active" href="news.html">News</a></td>
+    <td><a href="contact.html">Contact</a></td>
+  </tr></table>
+
+  <!-- Layout -->
+  <table class="layout"><tr valign="top">
+
+    <!-- Sidebar -->
+    <td class="sidebar" width="200">
+      <b>Categories</b><hr>
+      <ul>
+        <li><a href="#press">Press Releases</a></li>
+        <li><a href="#outages">Outages</a></li>
+        <li><a href="#community">Community</a></li>
+      </ul><hr>
+      <b>Media Contact</b><br>
+      <a href="mailto:press@amberstream.lt">press@amberstream.lt</a><br>
+      +370&nbsp;600&nbsp;98765
+    </td>
+
+    <!-- Content -->
+    <td class="content">
+      <h2>Company News</h2>
+      <p>Latest updates from AmberStream Energy across Lithuania, Latvia, and Estonia.</p>
+
+      <!-- PRESS RELEASES -->
+      <h3 id="press">Press Releases</h3>
+
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <td>
+            <b>AmberStream completes 110&nbsp;kV substation upgrade in Panevėžys</b><br>
+            <span style="font-size:12px;color:#6B3E00;">2025-10-15 • Panevėžys, LT</span>
+            <p style="margin:6px 0 0 0;">
+              New digital relays and added bays increase renewable hosting capacity by 60&nbsp;MW.
+              Commissioning concluded ahead of schedule with no unplanned interruptions.
+              <a href="#" title="Read more">Read more…</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>Cross-border capacity enhanced on EstLink corridor</b><br>
+            <span style="font-size:12px;color:#6B3E00;">2025-10-08 • Tallinn, EE</span>
+            <p style="margin:6px 0 0 0;">
+              Optimization measures deliver improved market coupling and stability during winter peaks.
+              <a href="#" title="Read more">Read more…</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- OUTAGES -->
+      <h3 id="outages" style="margin-top:12px;">Outages &amp; Maintenance</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <th align="left">Date</th>
+          <th align="left">Area</th>
+          <th align="left">Type</th>
+          <th align="left">Window</th>
+          <th align="left">Notes</th>
+        </tr>
+        <tr>
+          <td>2025-10-20</td>
+          <td>Kaunas (LT) – 110&nbsp;kV feeder</td>
+          <td>Planned</td>
+          <td>01:00–05:00</td>
+          <td>Protective relay testing; brief service interruptions possible</td>
+        </tr>
+        <tr>
+          <td>2025-10-22</td>
+          <td>Rīga (LV) – substation bay</td>
+          <td>Planned</td>
+          <td>23:00–03:00</td>
+          <td>SCADA upgrade; rerouted load to minimize impact</td>
+        </tr>
+      </table>
+
+      <!-- COMMUNITY -->
+      <h3 id="community" style="margin-top:12px;">Community &amp; Programs</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <td>
+            <b>AmberStream Community Fund: Round 2 awards announced</b><br>
+            <span style="font-size:12px;color:#6B3E00;">2025-09-30 • Baltics</span>
+            <p style="margin:6px 0 0 0;">
+              Grants support energy-efficiency upgrades in schools and municipal buildings across LT/LV/EE.
+              <a href="#" title="Read more">Read more…</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>Student tours reopen at selected substations</b><br>
+            <span style="font-size:12px;color:#6B3E00;">2025-09-25 • Region-wide</span>
+            <p style="margin:6px 0 0 0;">
+              Safety-led visits with demonstrations of grid monitoring and protection equipment.
+              <a href="#" title="Read more">Read more…</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- RSS / Subscribe (old-school box) -->
+      <h3 style="margin-top:12px;">Subscribe</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <td>
+            Get updates by email: <a href="mailto:press@amberstream.lt?subject=Subscribe%20to%20news">press@amberstream.lt</a><br>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr></table>
+
+  <!-- Footer -->
+  <table class="ftr"><tr><td class="ftr-cell">
+    &copy; <span id="year"></span> AmberStream Energy | <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
+  </td></tr></table>
+
+</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Electricity Plans – AmberStream Energy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page-frame">
+
+  <!-- Header -->
+  <table class="hdr"><tr><td class="hdr-cell">
+    <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+    <div class="hdr-text"><h1>AmberStream</h1>
+      <p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p>
+    </div>
+  </td></tr></table>
+
+  <!-- Ticker -->
+  <table class="ticker"><tr><td class="ticker-cell">
+    <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
+      <strong>Energy Price Ticker:</strong>
+      &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
+      <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
+    </marquee>
+  </td></tr></table>
+  <script>
+  fetch('/api/plans').then(res => res.json()).then(data => {
+    if(data.cheapest !== undefined && data.cheapest !== null) {
+      document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
+    } else {
+      document.getElementById('amberstreamPrice').textContent = 'N/A';
+    }
+  });
+  </script>
+
+  <!-- Navigation -->
+  <table class="nav"><tr class="nav-row" align="center">
+    <td><a href="AmberStream.html">Home</a></td>
+    <td><a href="about.html">About AmberStream</a></td>
+    <td><a href="services.html">Services</a></td>
+    <td><a class="active" href="plans.html">Electricity Plans</a></td>
+    <td><a href="sustainability.html">Sustainability</a></td>
+    <td><a href="news.html">News</a></td>
+    <td><a href="contact.html">Contact</a></td>
+  </tr></table>
+
+  <!-- Layout -->
+  <table class="layout"><tr valign="top">
+
+    <!-- Sidebar -->
+    <td class="sidebar" width="200">
+      <b>Need help?</b><hr>
+      <ul>
+        <li><a href="contact.html">Get a quote</a></li>
+        <li><a href="contact.html">Move-in / move-out</a></li>
+        <li><a href="services.html">Smart metering</a></li>
+        <li><a href="news.html">Outage info</a></li>
+      </ul><hr>
+      <b>Contact</b><br>
+      support@amberstream.lt<br>
+      +370&nbsp;600&nbsp;12345
+    </td>
+
+    <!-- Content -->
+    <td class="content">
+      <h2>Electricity Plans</h2>
+      <p>
+        Choose a plan that fits your usage. Baltic-region settlement follows Nord Pool periods;
+        we offer fixed and time-of-use options for households and businesses.
+      </p>
+
+      <!-- Plan table -->
+      <h3>Residential Plans</h3>
+      <div id="updated" style="font-size:12px;color:#555;"></div>
+      <table class="highlight" id="plansTable" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <th align="left">Plan</th>
+          <th align="left">Energy Rate</th>
+        </tr>
+      </table>
+      <script>
+      fetch('/api/plans').then(res => res.json()).then(data => {
+        const table = document.getElementById('plansTable');
+        data.plans.forEach(plan => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td><b>${plan.name}</b></td><td>€${plan.price.toFixed(2)} / kWh</td>`;
+          table.appendChild(row);
+        });
+        if (data.last_updated) {
+          document.getElementById('updated').textContent = "Last updated: " + new Date(data.last_updated).toLocaleString();
+        }
+      });
+      </script>
+
+      <!-- ToU schedule -->
+      <h3>Time-of-Use Schedule</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr><th align="left">Period</th><th align="left">Hours (local)</th><th align="left">Rate</th></tr>
+        <tr><td><b>Day</b></td><td>07:00–22:00 (Mon–Fri)</td><td>€0.14 / kWh</td></tr>
+        <tr><td><b>Night</b></td><td>22:00–07:00 (Mon–Fri)</td><td>€0.09 / kWh</td></tr>
+        <tr><td><b>Weekend</b></td><td>All day (Sat–Sun)</td><td>€0.10 / kWh</td></tr>
+      </table>
+
+      <!-- Business plans -->
+      <h3>Business Plans</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <th align="left">Plan</th>
+          <th align="left">Tariff</th>
+          <th align="left">Best for</th>
+          <th align="left">Extras</th>
+        </tr>
+        <tr>
+          <td><b>SME Flex</b></td>
+          <td>Tiered / ToU</td>
+          <td>Shops, offices</td>
+          <td>Usage reports, load tips</td>
+        </tr>
+        <tr>
+          <td><b>Industrial Custom</b></td>
+          <td>Custom PPA</td>
+          <td>Manufacturing, logistics</td>
+          <td>Dedicated support, DR options</td>
+        </tr>
+      </table>
+
+      <!-- Comparison bullets -->
+      <h3>Why choose AmberStream</h3>
+      <ul>
+        <li>Simple rates with clear standing charge</li>
+        <li>Optional 100% renewable energy</li>
+        <li>Smart metering &amp; usage analytics</li>
+        <li>Baltic-region support and grid expertise</li>
+      </ul>
+
+      <!-- CTA box -->
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <td>
+            <b>Ready to switch?</b><br>
+            Email <a href="mailto:sales@amberstream.lt">sales@amberstream.lt</a> or call +370&nbsp;600&nbsp;12345.<br>
+            Moving home? <a href="contact.html">Tell us your new address</a>.
+          </td>
+        </tr>
+      </table>
+
+      <!-- Small print -->
+      <p style="font-size:12px; color:#6B3E00; margin-top:6px;">
+        Rates shown apply to energy supply only; network charges, taxes, and regulatory fees may appear separately on your bill.
+        Time windows follow local time and public holidays may differ.
+      </p>
+    </td>
+  </tr></table>
+
+  <!-- Footer -->
+  <table class="ftr"><tr><td class="ftr-cell">
+    &copy; <span id="year"></span> AmberStream Energy | <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
+  </td></tr></table>
+
+</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>

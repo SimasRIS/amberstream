@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AmberStream – Clean Local Hydro from AmberFalls</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-frame">
+
+  <!-- Header -->
+  <table class="hdr">
+    <tr>
+      <td class="hdr-cell">
+        <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+        <div class="hdr-text">
+          <h1>AmberStream</h1>
+          <p class="tagline">Clean • Local • Reliable Hydro from AmberFalls</p>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Price Ticker -->
+  <table class="ticker">
+    <tr>
+      <td class="ticker-cell">
+        <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
+          <strong>Energy Price Ticker:</strong>
+          &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
+          <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
+        </marquee>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Navigation -->
+  <table class="nav">
+    <tr class="nav-row" align="center">
+      <td><a class="active" href="AmberStream.html">Home</a></td>
+      <td><a href="about.html">About AmberStream</a></td>
+      <td><a href="services.html">Services</a></td>
+      <td><a href="plans.html">Electricity Plans</a></td>
+      <td><a href="sustainability.html">Sustainability</a></td>
+      <td><a href="news.html">News</a></td>
+      <td><a href="contact.html">Contact</a></td>
+    </tr>
+  </table>
+
+  <!-- Main layout -->
+  <table class="layout">
+    <tr valign="top">
+      <!-- Sidebar -->
+      <td class="sidebar" width="200">
+        <b>Quick Links</b><hr>
+        <ul>
+          <li><a href="plans.html">Customer Portal</a></li>
+          <li><a href="news.html">Outage Map</a></li>
+          <li><a href="contact.html">Careers</a></li>
+        </ul><hr>
+        <b>Contact Us</b><br>
+        AmberStream Energy<br>
+        Vilnius, Lithuania<br>
+        <a href="mailto:info@amberstream.energy">info@amberstream.energy</a><br>
+        +370 600 12345
+      </td>
+
+      <!-- Content -->
+      <td class="content">
+        
+        <h2>Welcome to AmberStream</h2>
+
+        <!-- Residential Plans Box -->
+        <div id="mainPlansBox" style="margin:16px 0;">
+          <h3>Residential Electricity Plans</h3>
+          <div id="updated" style="font-size:12px;color:#555;"></div>
+          <table class="highlight" id="plansTable" cellspacing="0" cellpadding="12" border="1" width="100%" style="font-size:18px;">
+            <tr>
+              <th align="left" style="font-size:20px; font-weight:bold;">Plan</th>
+              <th align="left" style="font-size:20px; font-weight:bold;">Energy Rate</th>
+            </tr>
+          </table>
+          <style>
+            @keyframes blink {
+              0%, 100% { color: #0b3a53; opacity: 1; }
+              50% { color: #1f7aa8; opacity: 0.7; }
+            }
+            .price-blink {
+              animation: blink 1.5s infinite;
+              font-weight: bold;
+            }
+          </style>
+        </div>
+        <script>
+          // Ticker price
+          fetch('/api/plans').then(res => res.json()).then(data => {
+            if(data.cheapest !== undefined && data.cheapest !== null) {
+              document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
+            } else {
+              document.getElementById('amberstreamPrice').textContent = 'N/A';
+            }
+          });
+          // Plans table
+          fetch('/api/plans').then(res => res.json()).then(data => {
+            const table = document.getElementById('plansTable');
+            data.plans.forEach(plan => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td style="font-size:18px; font-weight:bold;"><b>${plan.name}</b></td><td class="price-blink" style="font-size:18px; font-weight:bold;">€${plan.price.toFixed(2)} / kWh</td>`;
+            table.appendChild(row);
+            });
+            if (data.last_updated) {
+              document.getElementById('updated').textContent = "Last updated: " + new Date(data.last_updated).toLocaleString();
+            }
+          });
+        </script>
+
+        <p>
+          AmberStream operates the AmberFalls Hydroelectric Dam, a 174&nbsp;MW facility that stores water behind a dam and releases it through turbines to generate clean electricity on demand. The 174&nbsp;MW figure is the instantaneous power output at a moment in time—not energy “per hour.”
+        </p>
+
+        <img src="{{ url_for('static', filename='amberstreamhq.jpg') }}" alt="AmberStream Energy Facility" class="photo" style="max-width:100%; height:auto;">
+
+        <p>
+          When running at full output, AmberFalls can produce about 4,176 MWh of energy in a 24‑hour period. Over a typical year at ~50% capacity factor, that’s around 762,120 MWh—roughly enough for 190,530–254,040 homes.
+        </p>
+
+        
+
+<!-- AmberStream 174 MW dam facts (auto-inserted) -->
+<table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+  <tr><th align="left" colspan="2">AmberFalls Hydroelectric Dam – Key Numbers</th></tr>
+  <tr><td><b>Installed capacity</b></td><td>174&nbsp;MW (174,000&nbsp;kW)</td></tr>
+  <tr><td><b>Instantaneous output</b></td><td>Power at a moment in time (not “per hour”)</td></tr>
+  <tr><td><b>Energy at full output</b></td><td>4,176&nbsp;MWh/day at 174&nbsp;MW</td></tr>
+  <tr><td><b>Estimated annual generation</b></td><td>762,120&nbsp;MWh/yr (~50% capacity factor)</td></tr>
+  <tr><td><b>Homes powered (EU typical)</b></td><td>~190,530–254,040 homes/yr (4–3&nbsp;MWh/home)</td></tr>
+  <tr><td><b>CO₂ avoided</b></td><td>~228,636&nbsp;tonnes/year (vs. 300&nbsp;kg/MWh grid)</td></tr>
+</table>
+
+
+        <h3>Latest News</h3>
+        <ul>
+          <li>October 15, 2025 – AmberStream wins “Best Sustainable Utility” award</li>
+          <li>October 8, 2025 – New customer self-service portal launched</li>
+        </ul>
+
+        <!-- Highlight box -->
+        <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+          <tr>
+            <td>
+              <b class="hl-title">Why choose AmberStream?</b><br>
+              • Local, renewable hydro at AmberFalls<br>
+              • Transparent pricing, no hidden fees<br>
+              • Smart controls for grid stability<br>
+              • Friendly support from a small Baltic team
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Footer -->
+  <table class="ftr">
+    <tr>
+      <td class="ftr-cell">
+        &copy; <span id="year"></span> AmberStream Energy | 
+        <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sustainability – AmberStream Energy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page-frame">
+
+  <!-- Header -->
+  <table class="hdr"><tr><td class="hdr-cell">
+    <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+    <div class="hdr-text"><h1>AmberStream</h1>
+      <p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p>
+    </div>
+  </td></tr></table>
+
+  <!-- Ticker -->
+  <table class="ticker"><tr><td class="ticker-cell">
+    <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
+      <strong>Energy Price Ticker:</strong>
+      &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
+      <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
+    </marquee>
+  </td></tr></table>
+  <script>
+  fetch('/api/plans').then(res => res.json()).then(data => {
+    if(data.cheapest !== undefined && data.cheapest !== null) {
+      document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
+    } else {
+      document.getElementById('amberstreamPrice').textContent = 'N/A';
+    }
+  });
+  </script>
+
+  <!-- Navigation -->
+  <table class="nav"><tr class="nav-row" align="center">
+    <td><a href="AmberStream.html">Home</a></td>
+    <td><a href="about.html">About AmberStream</a></td>
+    <td><a href="services.html">Services</a></td>
+    <td><a href="plans.html">Electricity Plans</a></td>
+    <td><a class="active" href="sustainability.html">Sustainability</a></td>
+    <td><a href="news.html">News</a></td>
+    <td><a href="contact.html">Contact</a></td>
+  </tr></table>
+
+  <!-- Layout -->
+  <table class="layout"><tr valign="top">
+
+    <!-- Sidebar -->
+    <td class="sidebar" width="200">
+      <b>Programs</b><hr>
+      <ul>
+        <li>Hydro storage for peak support and frequency response (SCADA-controlled)</li>
+      </ul><hr>
+      <b>Interconnects</b><br>
+      NordBalt • LitPol Link • EstLink<br><br>
+      <b>Contact</b><br>
+      <a href="mailto:sustainability@amberstream.lt">sustainability@amberstream.lt</a>
+    </td>
+
+    <!-- Content -->
+    <td class="content">
+      <h2>Sustainability</h2>
+      <p>
+        AmberStream Energy develops and operates infrastructure across Lithuania, Latvia and Estonia
+        to enable a low-carbon Baltic power system. We integrate renewables, expand cross-border
+        capacity, and modernize the grid for flexibility and reliability year-round.
+      </p>
+
+      <!-- Targets -->
+      <h3>Targets</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <th align="left">Area</th>
+          <th align="left">2026</th>
+          <th align="left">2030</th>
+          <th align="left">Notes</th>
+        </tr>
+        <tr>
+          <td>CO₂ intensity (scope 2, grid ops)</td>
+          <td>&lt; 95 g/kWh</td>
+          <td>&lt; 60 g/kWh</td>
+          <td>Through renewables + storage + interconnects</td>
+        </tr>
+        <tr>
+          <td>Renewable integration capacity</td>
+          <td>+600 MW</td>
+          <td>+1.5 GW</td>
+          <td>Connection bays, grid-forming inverters</td>
+        </tr>
+        <tr>
+          <td>Storage availability</td>
+          <td>250 MWh</td>
+          <td>700 MWh</td>
+          <td>Pumped-storage + battery hybrids</td>
+        </tr>
+        <tr>
+          <td>Loss reduction</td>
+          <td>-0.3 pp</td>
+          <td>-0.8 pp</td>
+          <td>Reconductoring, VAR support, automation</td>
+        </tr>
+      </table>
+
+      <!-- Renewable mix -->
+      <h3>Renewables &amp; Storage Portfolio</h3>
+      <ul>
+        <li>Hydro storage for peak support and frequency response (SCADA-controlled)</li>
+      </ul>
+
+      <!-- Projects table -->
+      <h3>Key Grid Projects (Baltics)</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <th align="left">Project</th>
+          <th align="left">Scope</th>
+          <th align="left">Benefit</th>
+        </tr>
+        <tr>
+          <td>110/330 kV Substation Upgrades</td>
+          <td>New bays, digital relays, SCADA upgrades</td>
+          <td>Higher renewable hosting capacity</td>
+        </tr>
+        <tr>
+          <td>Cross-Border Capacity Enhancements</td>
+          <td>Interconnect optimization, phase-shifting</td>
+          <td>Market integration, security of supply</td>
+        </tr>
+        <tr>
+          <td>Flexible Resources Program</td>
+          <td>DR aggregation, industrial peak-shaving</td>
+          <td>Lower system peaks, improved stability</td>
+        </tr>
+      </table>
+
+      <!-- How customers can help -->
+      <h3>What Customers Can Do</h3>
+      <ul>
+        <li>Adopt smart thermostats and EV smart-charging</li>
+      </ul>
+
+      <!-- KPI box -->
+      <h3>Current KPIs</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr><th align="left">KPI</th><th align="left">Status</th></tr>
+        <tr><td>Renewable availability</td><td>98.4%</td></tr>
+        <tr><td>Grid interruptions (SAIDI)</td><td>↓ vs last year</td></tr>
+        <tr><td>Energy losses</td><td>↓ after reconductoring</td></tr>
+      </table>
+
+      <!-- CTA -->
+      <h3>Partner With Us</h3>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr>
+          <td>
+            Developers &amp; municipalities: write to
+            <a href="mailto:sustainability@amberstream.lt">sustainability@amberstream.lt</a>
+            for connection studies, storage siting, or pilot programs.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr></table>
+
+  <!-- Footer -->
+  <table class="ftr"><tr><td class="ftr-cell">
+    &copy; <span id="year"></span> AmberStream Energy | <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
+  </td></tr></table>
+
+</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
