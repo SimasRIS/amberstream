@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///plans.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
+login_manager.login_view = 'admin_login'
 
 # Database models
 class Worker(UserMixin, db.Model):
@@ -51,8 +52,15 @@ with app.app_context():
     setup_db()
 # ---------------------------------------------------------------
 
-@app.route('/', methods=['GET', 'POST'])
-def login():
+# Homepage - Main domain
+@app.route('/')
+def home():
+    return render_template('AmberStream.html')
+
+# Admin login page
+@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/admin/', methods=['GET', 'POST'])
+def admin_login():
     msg = ''
     if request.method == 'POST':
         user = Worker.query.filter_by(username=request.form['username']).first()
@@ -150,11 +158,11 @@ def plans_admin():
 </html>
 ''', plans=plans, msg=msg, meta=meta)
 
-@app.route('/logout')
+@app.route('/admin/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('admin_login'))
 
 @app.route('/api/plans')
 def api_plans():
@@ -197,10 +205,6 @@ def services_page():
 @app.route('/sustainability.html')
 def sustainability_page():
     return render_template('sustainability.html')
-
-@app.route('/')
-def home_redirect():
-    return render_template('AmberStream.html')
 
 if __name__ == '__main__':
     # Development only - use gunicorn for production
