@@ -150,6 +150,7 @@ def plans_admin():
       </form>
       <div style="font-size:12px;color:#555;margin-top:8px;">Last updated: {{ meta.last_updated.strftime('%Y-%m-%d %H:%M:%S') if meta else '?' }}</div>
       <div style="margin-top:10px;text-align:right;">
+        <a href="{{ url_for('change_password') }}">Change Password</a> | 
         <a href="{{ url_for('logout') }}">Logout</a>
       </div>
     </div>
@@ -157,6 +158,76 @@ def plans_admin():
 </body>
 </html>
 ''', plans=plans, msg=msg, meta=meta)
+
+@app.route('/admin/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    msg = ''
+    if request.method == 'POST':
+        old_password = request.form.get('old_password', '')
+        new_password = request.form.get('new_password', '')
+        confirm_password = request.form.get('confirm_password', '')
+        
+        # Validate old password
+        if current_user.password != old_password:
+            msg = 'Current password is incorrect!'
+        elif not new_password:
+            msg = 'New password cannot be empty!'
+        elif len(new_password) < 3:
+            msg = 'New password must be at least 3 characters!'
+        elif new_password != confirm_password:
+            msg = 'New passwords do not match!'
+        else:
+            # Update password
+            current_user.password = new_password
+            db.session.commit()
+            msg = 'Password changed successfully!'
+    
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Change Password – AmberStream</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="background:#ffffff;">
+  <div class="page-frame" style="max-width:500px;margin:48px auto;">
+    <table class="hdr"><tr><td class="hdr-cell">
+      <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+      <div class="hdr-text">
+        <h1>AmberStream</h1>
+        <p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p>
+      </div>
+    </td></tr></table>
+    <div class="content" style="padding:25px 20px;max-width:400px;margin:auto;text-align:center;">
+      <h2 class="section-title">Change Password</h2>
+      {% if msg %}
+        <div style="color:{% if 'successfully' in msg %}green{% else %}red{% endif %};margin-bottom:10px;padding:10px;border-radius:4px;background:{% if 'successfully' in msg %}#e8f5e9{% else %}#ffebee{% endif %};">{{ msg }}</div>
+      {% endif %}
+      <form method="POST" style="max-width:300px;margin:auto;">
+        <div style="text-align:left;margin-bottom:15px;">
+          <label style="display:block;margin-bottom:5px;font-weight:bold;">Current Password:</label>
+          <input name="old_password" type="password" placeholder="Enter current password" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+        </div>
+        <div style="text-align:left;margin-bottom:15px;">
+          <label style="display:block;margin-bottom:5px;font-weight:bold;">New Password:</label>
+          <input name="new_password" type="password" placeholder="Enter new password" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+        </div>
+        <div style="text-align:left;margin-bottom:15px;">
+          <label style="display:block;margin-bottom:5px;font-weight:bold;">Confirm New Password:</label>
+          <input name="confirm_password" type="password" placeholder="Confirm new password" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+        </div>
+        <button class="btn" type="submit" style="margin-top:16px;width:100%;">Change Password</button>
+      </form>
+      <div style="margin-top:20px;text-align:center;">
+        <a href="{{ url_for('plans_admin') }}">← Back to Plans</a> | 
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+''', msg=msg)
 
 @app.route('/admin/logout')
 @login_required
