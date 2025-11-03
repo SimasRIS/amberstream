@@ -134,13 +134,6 @@ def plans_admin():
       </div>
     </td></tr></table>
     <div class="content" style="padding:25px 20px;max-width:430px;margin:auto;text-align:center;">
-      <div style="background-color:#f5f5f5;padding:15px;margin-bottom:20px;border-radius:8px;border:2px solid #4CAF50;">
-        <h3 style="margin:0 0 10px 0;color:#333;">Account Settings</h3>
-        <div style="text-align:center;">
-          <a href="{{ url_for('change_password') }}" style="display:inline-block;padding:12px 24px;background-color:#4CAF50;color:white;text-decoration:none;border-radius:6px;margin-right:10px;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);">🔒 Change Password</a>
-          <a href="{{ url_for('logout') }}" style="display:inline-block;padding:12px 24px;background-color:#f44336;color:white;text-decoration:none;border-radius:6px;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);">Logout</a>
-        </div>
-      </div>
       <h2 class="section-title">Edit Electricity Plan Prices</h2>
       {% if msg %}<div style="color:green;margin-bottom:10px;">{{ msg }}</div>{% endif %}
       <form method="POST">
@@ -156,6 +149,10 @@ def plans_admin():
         <button class="btn" type="submit" style="margin-top:16px;width:100%;">Save All</button>
       </form>
       <div style="font-size:12px;color:#555;margin-top:8px;">Last updated: {{ meta.last_updated.strftime('%Y-%m-%d %H:%M:%S') if meta else '?' }}</div>
+      <div style="margin-top:20px;padding-top:20px;border-top:2px solid #ddd;">
+        <a href="{{ url_for('change_password') }}" style="display:inline-block;padding:12px 24px;background-color:#4CAF50;color:white;text-decoration:none;border-radius:6px;margin-right:10px;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:pointer;">🔒 Change Password</a>
+        <a href="{{ url_for('logout') }}" style="display:inline-block;padding:12px 24px;background-color:#f44336;color:white;text-decoration:none;border-radius:6px;font-size:16px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:pointer;">Logout</a>
+      </div>
     </div>
   </div>
 </body>
