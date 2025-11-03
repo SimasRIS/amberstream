@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>About – AmberStream Energy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page-frame">
+
+  <!-- Header -->
+  <table class="hdr"><tr><td class="hdr-cell">
+    <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+    <div class="hdr-text">
+      <h1>AmberStream</h1>
+      <p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p>
+    </div>
+  </td></tr></table>
+
+  <!-- Ticker -->
+  <table class="ticker"><tr><td class="ticker-cell">
+    <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
+      <strong>Energy Price Ticker:</strong>
+      &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
+      <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
+    </marquee>
+  </td></tr></table>
+  <script>
+fetch('/api/plans').then(res => res.json()).then(data => {
+  if(data.cheapest !== undefined && data.cheapest !== null) {
+    document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
+  } else {
+    document.getElementById('amberstreamPrice').textContent = 'N/A';
+  }
+});
+</script>
+
+  <!-- Navigation -->
+  <table class="nav">
+    <tr class="nav-row" align="center">
+      <td><a href="AmberStream.html">Home</a></td>
+      <td><a class="active" href="about.html">About AmberStream</a></td>
+      <td><a href="services.html">Services</a></td>
+      <td><a href="plans.html">Electricity Plans</a></td>
+      <td><a href="sustainability.html">Sustainability</a></td>
+      <td><a href="news.html">News</a></td>
+      <td><a href="contact.html">Contact</a></td>
+    </tr>
+  </table>
+
+  <!-- Layout -->
+  <table class="layout">
+    <tr valign="top">
+      <!-- Sidebar -->
+      <td class="sidebar" width="200">
+        <b>Quick Links</b><hr>
+        <ul>
+          <li><a href="plans.html">Customer Portal</a></li>
+          <li><a href="news.html">Outage Map</a></li>
+          <li><a href="contact.html">Careers</a></li>
+        </ul><hr>
+        <b>Contact Us</b><br>
+        AmberStream Energy<br>
+        Vilnius, Lithuania<br>
+        <a href="mailto:info@amberstream.lt">info@amberstream.lt</a><br>
+        +370 600 12345
+      </td>
+
+      <!-- Main Content -->
+      <td class="content">
+        <h2 class="section-title">About AmberStream Energy</h2>
+        <p>
+          AmberStream Energy operates and develops transmission networks across the Baltic region.
+          Our focus is dependable delivery, grid safety, and practical innovation that benefits homes,
+          businesses, and industry.
+        </p>
+
+        <h3 class="section-title">Hydro Storage Power Plant</h3>
+        <p>
+          Our hydro storage assets help stabilize the grid, storing energy during low demand
+          and releasing it during peaks. Below are photos you can replace with your own.
+        </p>
+
+        <!-- Image gallery (replace filenames with your images) -->
+        <table class="gallery-table" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <a href="{{ url_for('static', filename='hydro1.jpg') }}"><img src="{{ url_for('static', filename='hydro1.jpg') }}" alt="Hydro Storage Plant – Overview" class="gallery-img"></a>
+              <div class="caption">Hydro Storage Plant – Overview</div>
+            </td>
+            <td>
+              <a href="{{ url_for('static', filename='hydro2.jpg') }}"><img src="{{ url_for('static', filename='hydro2.jpg') }}" alt="Upper Reservoir & Penstocks" class="gallery-img"></a>
+              <div class="caption">Upper Reservoir &amp; Penstocks</div>
+            </td>
+          </tr>
+        </table>
+
+        <h3 class="section-title">Video: How Pumped-Storage Works</h3>
+        <div class="video-box" id="videoBox">
+            <p class="video-title"><b>Watch:</b> Pumped-Storage / Hydro Storage Explainer</p>
+
+            <!-- CORRECT: use /embed/ on youtube-nocookie -->
+            <iframe
+                id="ytEmbed"
+                class="video-embed"
+                src="https://www.youtube-nocookie.com/embed/l1AmgAVRxUI?rel=0&modestbranding=1"
+                title="Hydro Storage Explainer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                loading="lazy"
+                allowfullscreen>
+            </iframe>
+
+            <!-- Fallback button -->
+            <div id="ytFallback" style="display:none; text-align:center; padding:8px 0;">
+                <a href="https://www.youtube.com/watch?v=l1AmgAVRxUI" target="_blank" rel="noopener" class="btn-link">
+                ▶ Watch on YouTube
+                </a>
+            </div>
+        </div>
+
+        <!-- Remove: Solar Grid (Baltic Region) and all solar-related content -->
+        <!-- Optional: Solar explainer video with proper embed + fallback -->
+        <p class="video-title"><b>Watch:</b> Utility-Scale Solar in the Baltic Grid</p>
+        <!-- Everything from this section and its associated video block should be removed, ending before the next major heading or section -->
+
+
+        <h3 class="section-title">Our Mission</h3>
+        <ul>
+          <li>Deliver safe, reliable electricity across interconnected networks</li>
+          <li>Invest in storage, grid upgrades, and cross-border capacity</li>
+          <li>Support customers with straightforward plans and clear communication</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Footer -->
+  <table class="ftr"><tr><td class="ftr-cell">
+    &copy; <span id="year"></span> AmberStream Energy |
+    <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
+  </td></tr></table>
+
+</div>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

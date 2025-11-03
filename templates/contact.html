@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Contact – AmberStream Energy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page-frame">
+  <table class="hdr"><tr><td class="hdr-cell">
+    <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
+    <div class="hdr-text"><h1>AmberStream</h1><p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p></div>
+  </td></tr></table>
+  <table class="ticker"><tr><td class="ticker-cell">
+    <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
+      <strong>Energy Price Ticker:</strong>
+      &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
+      <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
+    </marquee>
+  </td></tr></table>
+  <table class="nav"><tr class="nav-row" align="center">
+    <td><a href="AmberStream.html">Home</a></td>
+    <td><a href="about.html">About AmberStream</a></td>
+    <td><a href="services.html">Services</a></td>
+    <td><a href="plans.html">Electricity Plans</a></td>
+    <td><a href="sustainability.html">Sustainability</a></td>
+    <td><a href="news.html">News</a></td>
+    <td><a class="active" href="contact.html">Contact</a></td>
+  </tr></table>
+  <table class="layout"><tr valign="top">
+    <td class="sidebar" width="200">
+      <b>Support</b><hr>
+      <ul><li>Outage Hotline: +370 600 12345</li><li>Billing: +370 600 54321</li></ul>
+    </td>
+    <td class="content">
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:info@amberstream.lt">info@amberstream.lt</a></p>
+      <p>Address: Vilnius, Lithuania</p>
+      <p>Working hours: Mon–Fri 9:00–17:00</p>
+      <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
+        <tr><td><b>Customer Care</b></td><td>support@amberstream.lt</td></tr>
+        <tr><td><b>Business Sales</b></td><td>sales@amberstream.lt</td></tr>
+        <tr><td><b>Press</b></td><td>press@amberstream.lt</td></tr>
+      </table>
+    </td>
+  </tr></table>
+  <table class="ftr"><tr><td class="ftr-cell">
+    &copy; <span id="year"></span> AmberStream Energy | <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
+  </td></tr></table>
+</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+fetch('/api/plans').then(res => res.json()).then(data => {
+  if(data.cheapest !== undefined && data.cheapest !== null) {
+    document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
+  } else {
+    document.getElementById('amberstreamPrice').textContent = 'N/A';
+  }
+});
+</script>
+</body>
+</html>
