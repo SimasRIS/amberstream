@@ -136,6 +136,10 @@ def plans_admin():
     <div class="content" style="padding:25px 20px;max-width:430px;margin:auto;text-align:center;">
       <h2 class="section-title">Edit Electricity Plan Prices</h2>
       {% if msg %}<div style="color:green;margin-bottom:10px;">{{ msg }}</div>{% endif %}
+      <div style="margin-bottom:15px;text-align:center;">
+        <a href="{{ url_for('change_password') }}" style="display:inline-block;padding:8px 16px;background-color:#4CAF50;color:white;text-decoration:none;border-radius:4px;margin-right:10px;font-size:14px;">🔒 Change Password</a>
+        <a href="{{ url_for('logout') }}" style="display:inline-block;padding:8px 16px;background-color:#f44336;color:white;text-decoration:none;border-radius:4px;font-size:14px;">Logout</a>
+      </div>
       <form method="POST">
         <table class="highlight" style="margin:auto;width:100%;">
           <tr><th>Plan</th><th>Energy Rate (€ / kWh)</th></tr>
@@ -149,10 +153,6 @@ def plans_admin():
         <button class="btn" type="submit" style="margin-top:16px;width:100%;">Save All</button>
       </form>
       <div style="font-size:12px;color:#555;margin-top:8px;">Last updated: {{ meta.last_updated.strftime('%Y-%m-%d %H:%M:%S') if meta else '?' }}</div>
-      <div style="margin-top:10px;text-align:right;">
-        <a href="{{ url_for('change_password') }}">Change Password</a> | 
-        <a href="{{ url_for('logout') }}">Logout</a>
-      </div>
     </div>
   </div>
 </body>
