@@ -1,163 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Services – AmberStream Energy</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<div class="page-frame">
-  <table class="hdr"><tr><td class="hdr-cell">
-    <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
-    <div class="hdr-text"><h1>AmberStream</h1><p class="tagline">Reliable • Sustainable • Affordable Energy for Everyone</p></div>
-  </td></tr></table>
-  <table class="ticker"><tr><td class="ticker-cell">
-    <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
-      <strong>Energy Price Ticker:</strong>
-      &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
-      <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
-      &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
-    </marquee>
-  </td></tr></table>
-  <table class="nav"><tr class="nav-row" align="center">
-    <td><a href="AmberStream.html">Home</a></td>
-    <td><a href="about.html">About AmberStream</a></td>
-    <td><a class="active" href="services.html">Services</a></td>
-    <td><a href="plans.html">Electricity Plans</a></td>
-    <td><a href="sustainability.html">Sustainability</a></td>
-    <td><a href="news.html">News</a></td>
-    <td><a href="contact.html">Contact</a></td>
-  </tr></table>
-  <table class="layout"><tr valign="top">
-    <td class="sidebar" width="200">
-      <b>Grid Services</b><hr>
-      <ul>
-        <li>Industrial metering</li><li>Peak load advisory</li><li>Interconnect studies</li>
-      </ul><hr>
-      <b>Support</b><br><a href="contact.html">24/7 Hotline</a>
-    </td>
-    <td class="content">
-    <h2>Our Services</h2>
-    <p>
-        AmberStream Energy provides transmission-level and retail services across the Baltic region,
-        connecting homes, businesses, and industry to a reliable 110/330&nbsp;kV network.
-        We focus on safety, transparency, and practical innovation.
-    </p>
+{% extends "base.html" %}
 
-    <!-- Residential & Business Supply -->
-    <h3>Residential &amp; Business Supply</h3>
-    <ul>
-        <li>Standard and green electricity plans</li>
-        <li>Fixed or flexible tariffs aligned with Nord Pool settlement periods</li>
-        <li>Online customer portal: billing, meter reads, usage history</li>
-    </ul>
+{% block title %}Services – AmberStream Energy{% endblock %}
+{% block description %}Transmission-level and retail energy services across the Baltics: interconnection studies, grid connection, industrial metering, demand response and outage support.{% endblock %}
 
-    <!-- Grid Services table -->
-    <h3>Grid &amp; Engineering Services</h3>
-    <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
-        <tr>
-        <th align="left">Service</th>
-        <th align="left">What we deliver</th>
-        <th align="left">Who it’s for</th>
-        </tr>
-        <tr>
-        <td>Interconnection Studies</td>
-        <td>Feasibility, load flow, short-circuit and protection review for 10–110&nbsp;kV tie-ins</td>
-        <td>Developers, large consumers</td>
-        </tr>
-        <tr>
-        <td>Grid Connection</td>
-        <td>Design coordination, bay allocations, relay settings, commissioning support</td>
-        <td>IPPs, industrial parks</td>
-        </tr>
-        <tr>
-        <td>Industrial Metering</td>
-        <td>Class-A meters, CT/VT selection, remote reads, settlement data exports</td>
-        <td>Manufacturing, logistics hubs</td>
-        </tr>
-        <tr>
-        <td>Demand Response</td>
-        <td>Peak-shaving programs, automated signals, incentive settlements</td>
-        <td>SMEs, large commercial</td>
-        </tr>
-        <tr>
-        <td>Outage &amp; Reliability</td>
-        <td>Planned maintenance windows, fault location, restoration coordination</td>
-        <td>All customers</td>
-        </tr>
-    </table>
+{% block content %}
 
-    <!-- Renewables / Storage -->
-    <h3>Renewables &amp; Storage Integration</h3>
-    <ul>
-        <li>Hydro storage (SCADA-controlled) for peak support and reserve operations</li>
-    </ul>
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--amber);">Services</p>
+    <h1>From a household meter to a 330 kV tie-in.</h1>
+    <p>AmberStream provides transmission-level and retail services across the Baltic region,
+       connecting homes, businesses and industry to a reliable 110/330 kV network.</p>
+  </div>
+</section>
 
-    <!-- EV / Efficiency -->
-    <h3>E-Mobility &amp; Efficiency</h3>
-    <ul>
-        <li>EV charging: site survey, load assessment, smart scheduling</li>
-        <li>Energy audits: lighting, HVAC, process optimization</li>
-        <li>Sub-metering and power-quality reports (harmonics, flicker, voltage dips)</li>
-    </ul>
+{# ---------- Supply ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Supply</p>
+      <h2>Residential and business supply</h2>
+    </div>
 
-    <!-- Plans summary table -->
-    <h3>Plan Overview</h3>
-    <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
-        <tr>
-        <th align="left">Plan</th>
-        <th align="left">Tariff</th>
-        <th align="left">Best for</th>
-        </tr>
-        <tr>
-        <td>Basic Saver</td>
-        <td>€0.12/kWh, monthly billing</td>
-        <td>Households, micro-businesses</td>
-        </tr>
-        <tr>
-        <td>Green Fixed</td>
-        <td>€0.13/kWh, 12-month term</td>
-        <td>100% renewable preference</td>
-        </tr>
-        <tr>
-        <td>Business Flex</td>
-        <td>Custom (tiered / ToU)</td>
-        <td>SMEs, multi-site customers</td>
-        </tr>
-    </table>
+    <div class="grid grid--3">
+      <article class="card">
+        <h3>Standard and green plans</h3>
+        <p>Fixed-rate and 100% renewable options for households and micro-businesses.</p>
+      </article>
+      <article class="card">
+        <h3>Flexible tariffs</h3>
+        <p>Fixed or flexible pricing aligned with Nord Pool settlement periods.</p>
+      </article>
+      <article class="card">
+        <h3>Customer portal</h3>
+        <p>Billing, meter reads and usage history in one place, online.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <!-- Contact / CTA -->
-    <h3>Get Started</h3>
-    <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
-        <tr>
-        <td><b>New connections &amp; studies</b></td>
-        <td><a href="mailto:sales@amberstream.lt">sales@amberstream.lt</a></td>
-        </tr>
-        <tr>
-        <td><b>24/7 support &amp; outages</b></td>
-        <td>+370&nbsp;600&nbsp;12345</td>
-        </tr>
-        <tr>
-        <td><b>Customer portal</b></td>
-        <td><a href="plans.html">View plans &amp; pay bill</a></td>
-        </tr>
-    </table>
-    </td>
+{# ---------- Grid services ---------- #}
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="grid grid--sidebar">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Engineering</p>
+          <h2>Grid and engineering services</h2>
+        </div>
 
-  </tr></table>
-  <table class="ftr"><tr><td class="ftr-cell">
-    &copy; <span id="year"></span> AmberStream Energy | <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
-  </td></tr></table>
-</div>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
-<script>
-fetch('/api/plans').then(res => res.json()).then(data => {
-  if(data.cheapest !== undefined && data.cheapest !== null) {
-    document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
-  } else {
-    document.getElementById('amberstreamPrice').textContent = 'N/A';
-  }
-});
-</script>
-</body>
-</html>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th scope="col">Service</th>
+                <th scope="col">What we deliver</th>
+                <th scope="col">Who it is for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowname">Interconnection studies</td>
+                <td>Feasibility, load flow, short-circuit and protection review for 10–110 kV tie-ins</td>
+                <td>Developers, large consumers</td>
+              </tr>
+              <tr>
+                <td class="rowname">Grid connection</td>
+                <td>Design coordination, bay allocations, relay settings, commissioning support</td>
+                <td>IPPs, industrial parks</td>
+              </tr>
+              <tr>
+                <td class="rowname">Industrial metering</td>
+                <td>Class-A meters, CT/VT selection, remote reads, settlement data exports</td>
+                <td>Manufacturing, logistics hubs</td>
+              </tr>
+              <tr>
+                <td class="rowname">Demand response</td>
+                <td>Peak-shaving programmes, automated signals, incentive settlements</td>
+                <td>SMEs, large commercial</td>
+              </tr>
+              <tr>
+                <td class="rowname">Outage &amp; reliability</td>
+                <td>Planned maintenance windows, fault location, restoration coordination</td>
+                <td>All customers</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="aside">
+          <h3>Grid services</h3>
+          <ul>
+            <li>Industrial metering</li>
+            <li>Peak load advisory</li>
+            <li>Interconnect studies</li>
+          </ul>
+        </div>
+        <div class="aside">
+          <h3>Support</h3>
+          <p>
+            24/7 outage hotline<br>
+            <span class="mono">+370 600 12345</span>
+          </p>
+          <p style="margin-top:var(--s-3);"><a href="{{ url_for('contact_page') }}">All contact details →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Storage & e-mobility ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--2">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Renewables &amp; storage</p>
+          <h2>Integration services</h2>
+        </div>
+        <p>
+          SCADA-controlled hydro storage provides peak support and reserve operations for the
+          regional grid — the same asset that generates the electricity we sell.
+        </p>
+        <p><a href="{{ url_for('about_page') }}">How AmberFalls works →</a></p>
+      </div>
+
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">E-mobility &amp; efficiency</p>
+          <h2>Using less, and using it better</h2>
+        </div>
+        <ul class="plan__features" style="margin-bottom:0;">
+          <li>EV charging: site survey, load assessment, smart scheduling</li>
+          <li>Energy audits: lighting, HVAC, process optimisation</li>
+          <li>Sub-metering and power-quality reports — harmonics, flicker, voltage dips</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Plan overview ---------- #}
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">At a glance</p>
+      <h2>Plan overview</h2>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th scope="col">Plan</th>
+            <th scope="col">Tariff</th>
+            <th scope="col">Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plan in plans %}
+          <tr>
+            <td class="rowname">{{ plan.name }}</td>
+            <td class="num">€{{ '%.2f'|format(plan.price) }} / kWh</td>
+            <td>{{ plan_audience.get(plan.name, 'Households and businesses') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:var(--s-4);"><a href="{{ url_for('plans_page') }}">Full plan details and time-of-use rates →</a></p>
+  </div>
+</section>
+
+{# ---------- Get started ---------- #}
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="grid grid--3">
+      <article class="card">
+        <h3>New connections &amp; studies</h3>
+        <p><a href="mailto:sales@amberstream.lt">sales@amberstream.lt</a></p>
+      </article>
+      <article class="card">
+        <h3>24/7 support &amp; outages</h3>
+        <p class="mono">+370 600 12345</p>
+      </article>
+      <article class="card">
+        <h3>Customer portal</h3>
+        <p><a href="{{ url_for('plans_page') }}">View plans &amp; pay your bill</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

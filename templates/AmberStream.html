@@ -1,182 +1,223 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>AmberStream – Clean Local Hydro from AmberFalls</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% from "_macros.html" import review_card %}
 
-<div class="page-frame">
+{% block title %}AmberStream Energy – Clean local hydro from the AmberFalls dam{% endblock %}
+{% block description %}AmberStream supplies clean electricity generated at the 174 MW AmberFalls hydroelectric dam, with transparent rates and no hidden fees across the Baltic region.{% endblock %}
 
-  <!-- Header -->
-  <table class="hdr">
-    <tr>
-      <td class="hdr-cell">
-        <img src="{{ url_for('static', filename='amberstream.png') }}" class="hdr-logo" alt="AmberStream Logo">
-        <div class="hdr-text">
-          <h1>AmberStream</h1>
-          <p class="tagline">Clean • Local • Reliable Hydro from AmberFalls</p>
-        </div>
-      </td>
-    </tr>
-  </table>
+{% block content %}
 
-  <!-- Price Ticker -->
-  <table class="ticker">
-    <tr>
-      <td class="ticker-cell">
-        <marquee class="ticker-mq" scrollamount="5" behavior="scroll" direction="left">
-          <strong>Energy Price Ticker:</strong>
-          &nbsp;&nbsp;NordPower: €0.18/kWh • HydroFlex: €0.17/kWh • VoltNordic: €0.19/kWh • RiverEnergy: €0.16/kWh •
-          <span class="ticker-highlight"><strong>AmberStream: <span id="amberstreamPrice">—</span> — CHEAPEST</strong></span>
-          &nbsp;&nbsp;|&nbsp;&nbsp;Switch and save today.
-        </marquee>
-      </td>
-    </tr>
-  </table>
+{# ---------- Hero ---------- #}
+<section class="hero">
+  {# hydro1 is the only asset wide enough for a full-bleed hero (1400px);
+     amberstreamhq.jpg is 474px and visibly upscaled here. #}
+  <img class="hero__media" src="{{ url_for('static', filename='hydro1.jpg') }}" alt="" fetchpriority="high">
+  <div class="wrap hero__inner">
+    <p class="eyebrow" style="color:var(--amber);">Vilnius · Lithuania</p>
+    <h1>Power that comes<br>from the <em>river</em>.</h1>
+    <p class="hero__lede">
+      We run the AmberFalls hydroelectric dam and sell what it generates directly to
+      Baltic homes and businesses — no fuel, no middlemen, no hidden fees.
+    </p>
 
-  <!-- Navigation -->
-  <table class="nav">
-    <tr class="nav-row" align="center">
-      <td><a class="active" href="AmberStream.html">Home</a></td>
-      <td><a href="about.html">About AmberStream</a></td>
-      <td><a href="services.html">Services</a></td>
-      <td><a href="plans.html">Electricity Plans</a></td>
-      <td><a href="sustainability.html">Sustainability</a></td>
-      <td><a href="news.html">News</a></td>
-      <td><a href="contact.html">Contact</a></td>
-    </tr>
-  </table>
+    <div class="hero__rate">
+      <span class="hero__rate-value js-rate">—</span>
+      <span class="hero__rate-label">Our lowest residential rate</span>
+    </div>
 
-  <!-- Main layout -->
-  <table class="layout">
-    <tr valign="top">
-      <!-- Sidebar -->
-      <td class="sidebar" width="200">
-        <b>Quick Links</b><hr>
-        <ul>
-          <li><a href="plans.html">Customer Portal</a></li>
-          <li><a href="news.html">Outage Map</a></li>
-          <li><a href="contact.html">Careers</a></li>
-        </ul><hr>
-        <b>Contact Us</b><br>
-        AmberStream Energy<br>
-        Vilnius, Lithuania<br>
-        <a href="mailto:info@amberstream.energy">info@amberstream.energy</a><br>
-        +370 600 12345
-      </td>
+    <div class="hero__actions">
+      <a class="btn btn--on-dark" href="{{ url_for('plans_page') }}">See electricity plans</a>
+      <a class="btn btn--ghost-light" href="{{ url_for('about_page') }}">How the dam works</a>
+    </div>
+  </div>
+</section>
 
-      <!-- Content -->
-      <td class="content">
-        
-        <h2>Welcome to AmberStream</h2>
+{# ---------- Plans ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Residential plans</p>
+      <h2>Three plans. One page of small print.</h2>
+      <p class="lede">
+        Every rate below is what you pay for energy supply. Network charges and taxes
+        are listed separately on your bill, never folded in to look cheaper.
+      </p>
+    </div>
 
-        <!-- Residential Plans Box -->
-        <div id="mainPlansBox" style="margin:16px 0;">
-          <h3>Residential Electricity Plans</h3>
-          <div id="updated" style="font-size:12px;color:#555;"></div>
-          <table class="highlight" id="plansTable" cellspacing="0" cellpadding="12" border="1" width="100%" style="font-size:18px;">
-            <tr>
-              <th align="left" style="font-size:20px; font-weight:bold;">Plan</th>
-              <th align="left" style="font-size:20px; font-weight:bold;">Energy Rate</th>
-            </tr>
-          </table>
-          <style>
-            @keyframes blink {
-              0%, 100% { color: #0b3a53; opacity: 1; }
-              50% { color: #1f7aa8; opacity: 0.7; }
-            }
-            .price-blink {
-              animation: blink 1.5s infinite;
-              font-weight: bold;
-            }
-          </style>
-        </div>
-        <script>
-          // Ticker price
-          fetch('/api/plans').then(res => res.json()).then(data => {
-            if(data.cheapest !== undefined && data.cheapest !== null) {
-              document.getElementById('amberstreamPrice').textContent = `€${data.cheapest.toFixed(2)}/kWh`;
-            } else {
-              document.getElementById('amberstreamPrice').textContent = 'N/A';
-            }
-          });
-          // Plans table
-          fetch('/api/plans').then(res => res.json()).then(data => {
-            const table = document.getElementById('plansTable');
-            data.plans.forEach(plan => {
-            const row = document.createElement('tr');
-            row.innerHTML = `<td style="font-size:18px; font-weight:bold;"><b>${plan.name}</b></td><td class="price-blink" style="font-size:18px; font-weight:bold;">€${plan.price.toFixed(2)} / kWh</td>`;
-            table.appendChild(row);
-            });
-            if (data.last_updated) {
-              document.getElementById('updated').textContent = "Last updated: " + new Date(data.last_updated).toLocaleString();
-            }
-          });
-        </script>
-
-        <p>
-          AmberStream operates the AmberFalls Hydroelectric Dam, a 174&nbsp;MW facility that stores water behind a dam and releases it through turbines to generate clean electricity on demand. The 174&nbsp;MW figure is the instantaneous power output at a moment in time—not energy “per hour.”
+    <div class="grid grid--3">
+      {% for plan in plans %}
+      <article class="plan{% if plan.id == cheapest_id %} plan--best{% endif %}">
+        {% if plan.id == cheapest_id %}<span class="plan__flag">Best value</span>{% endif %}
+        <h3 class="plan__name">{{ plan.name }}</h3>
+        <p class="plan__price">
+          <span class="plan__price-value">€{{ '%.2f'|format(plan.price) }}</span>
+          <span class="plan__price-unit">per kWh</span>
         </p>
-
-        <img src="{{ url_for('static', filename='amberstreamhq.jpg') }}" alt="AmberStream Energy Facility" class="photo" style="max-width:100%; height:auto;">
-
-        <p>
-          When running at full output, AmberFalls can produce about 4,176 MWh of energy in a 24‑hour period. Over a typical year at ~50% capacity factor, that’s around 762,120 MWh—roughly enough for 190,530–254,040 homes.
-        </p>
-
-        
-
-<!-- AmberStream 174 MW dam facts (auto-inserted) -->
-<table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
-  <tr><th align="left" colspan="2">AmberFalls Hydroelectric Dam – Key Numbers</th></tr>
-  <tr><td><b>Installed capacity</b></td><td>174&nbsp;MW (174,000&nbsp;kW)</td></tr>
-  <tr><td><b>Instantaneous output</b></td><td>Power at a moment in time (not “per hour”)</td></tr>
-  <tr><td><b>Energy at full output</b></td><td>4,176&nbsp;MWh/day at 174&nbsp;MW</td></tr>
-  <tr><td><b>Estimated annual generation</b></td><td>762,120&nbsp;MWh/yr (~50% capacity factor)</td></tr>
-  <tr><td><b>Homes powered (EU typical)</b></td><td>~190,530–254,040 homes/yr (4–3&nbsp;MWh/home)</td></tr>
-  <tr><td><b>CO₂ avoided</b></td><td>~228,636&nbsp;tonnes/year (vs. 300&nbsp;kg/MWh grid)</td></tr>
-</table>
-
-
-        <h3>Latest News</h3>
-        <ul>
-          <li>October 15, 2025 – AmberStream wins “Best Sustainable Utility” award</li>
-          <li>October 8, 2025 – New customer self-service portal launched</li>
+        <ul class="plan__features">
+          {% for feature in plan_features.get(plan.name, default_features) %}
+          <li>{{ feature }}</li>
+          {% endfor %}
         </ul>
+        <a class="btn btn--{% if plan.id == cheapest_id %}primary{% else %}secondary{% endif %} btn--block"
+           href="{{ url_for('contact_page') }}">Switch to {{ plan.name }}</a>
+      </article>
+      {% endfor %}
+    </div>
 
-        <!-- Highlight box -->
-        <table class="highlight" cellspacing="0" cellpadding="8" border="1" width="100%">
-          <tr>
-            <td>
-              <b class="hl-title">Why choose AmberStream?</b><br>
-              • Local, renewable hydro at AmberFalls<br>
-              • Transparent pricing, no hidden fees<br>
-              • Smart controls for grid stability<br>
-              • Friendly support from a small Baltic team
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+    {% if meta %}
+    <p class="small-print mono" style="margin-top:var(--s-4);">
+      Rates last updated {{ meta.last_updated.strftime('%Y-%m-%d %H:%M') }} UTC
+    </p>
+    {% endif %}
+  </div>
+</section>
 
-  <!-- Footer -->
-  <table class="ftr">
-    <tr>
-      <td class="ftr-cell">
-        &copy; <span id="year"></span> AmberStream Energy | 
-        <a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Terms</a>
-      </td>
-    </tr>
-  </table>
+{# ---------- The dam ---------- #}
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="grid grid--2" style="align-items:center; margin-bottom:var(--s-7);">
+      <div class="section-head" style="margin-bottom:0;">
+        <p class="eyebrow">AmberFalls hydroelectric dam</p>
+        <h2>One dam. Roughly a quarter of a million homes.</h2>
+        <p class="lede">
+          AmberFalls stores water behind the dam and releases it through turbines on demand.
+          Its 174 MW rating is instantaneous power — the output at a moment in time, not energy per hour.
+        </p>
+      </div>
 
-</div>
+      <figure class="figure figure--natural" style="--img-w:474px;">
+        <img src="{{ url_for('static', filename='amberstreamhq.jpg') }}"
+             alt="The AmberStream Energy facility" width="474" height="251" loading="lazy">
+        <figcaption>The AmberStream Energy facility.</figcaption>
+      </figure>
+    </div>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat__value">174 <span class="stat__unit">MW</span></span>
+        <span class="stat__label">Installed capacity</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">762,120 <span class="stat__unit">MWh</span></span>
+        <span class="stat__label">Generated per year at ~50% capacity factor</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">228,636 <span class="stat__unit">t</span></span>
+        <span class="stat__label">CO₂ avoided per year vs. a 300 kg/MWh grid</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">190k–254k</span>
+        <span class="stat__label">Homes powered annually (3–4 MWh each)</span>
+      </div>
+    </div>
 
-</body>
-</html>
+    <p style="margin-top:var(--s-5);">
+      <a href="{{ url_for('about_page') }}">Read how pumped storage balances the Baltic grid →</a>
+    </p>
+  </div>
+</section>
+
+{# ---------- Why us ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Why AmberStream</p>
+      <h2>A small Baltic utility that owns its own generation.</h2>
+    </div>
+
+    <div class="grid grid--4">
+      <article class="card">
+        <h3>Local and renewable</h3>
+        <p>Every kilowatt-hour we sell is generated at AmberFalls, not bought on a spot market and relabelled.</p>
+      </article>
+      <article class="card">
+        <h3>Transparent pricing</h3>
+        <p>One published rate per plan. Network charges and taxes stay on their own line of your bill.</p>
+      </article>
+      <article class="card">
+        <h3>Grid stability</h3>
+        <p>SCADA-controlled hydro storage supplies peak support and frequency response to the regional grid.</p>
+      </article>
+      <article class="card">
+        <h3>Support that answers</h3>
+        <p>A small team in Vilnius, reachable Mon–Fri 09:00–17:00, plus a 24/7 outage hotline.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ---------- News ---------- #}
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Latest news</p>
+      <h2>What we are working on now.</h2>
+    </div>
+
+    <div class="news-item">
+      <p class="news-item__meta">
+        2026-08-19
+        <span class="news-item__place">AmberFalls, LT</span>
+      </p>
+      <div>
+        <h3>Storage availability reaches 250 MWh</h3>
+        <p>The latest pumped-storage upgrade at AmberFalls brings dispatchable capacity to
+           250 MWh — the figure set out for 2026 in our sustainability plan.</p>
+        <a href="{{ url_for('sustainability_page') }}">See our 2026 targets →</a>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <p class="news-item__meta">
+        2026-07-30
+        <span class="news-item__place">Baltics</span>
+      </p>
+      <div>
+        <h3>Night rate of €0.09/kWh opens to all metered households</h3>
+        <p>Any customer with a smart meter can now move to the time-of-use tariff and pay
+           €0.09/kWh between 22:00 and 07:00 on weekdays.</p>
+        <a href="{{ url_for('plans_page') }}">Compare the tariffs →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Reviews ---------- #}
+{% if recent_reviews %}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Customer reviews</p>
+      <h2>In our customers' words.</h2>
+      {% if review_summary.average %}
+      <p class="lede">
+        Rated {{ review_summary.average }} out of 5 from
+        {{ review_summary.count }} review{{ '' if review_summary.count == 1 else 's' }}.
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="grid grid--3">
+      {% for review in recent_reviews %}{{ review_card(review) }}{% endfor %}
+    </div>
+
+    <p style="margin-top:var(--s-5);">
+      <a href="{{ url_for('reviews_page') }}">Read all reviews, or leave your own →</a>
+    </p>
+  </div>
+</section>
+{% endif %}
+
+{# ---------- Closing CTA ---------- #}
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="callout row" style="justify-content:space-between;">
+      <div style="flex:1 1 22rem;">
+        <h3>Ready to switch?</h3>
+        <p>Switching takes one email and about ten minutes. We handle the paperwork with your current supplier.</p>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('contact_page') }}">Start switching</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

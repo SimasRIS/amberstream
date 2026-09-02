@@ -1,0 +1,28 @@
+{# Star rating. Drawn as inline SVG rather than glyphs so it scales cleanly and
+   takes its colour from the surrounding section. #}
+{% macro stars(rating, size=16) %}
+<span class="stars" role="img" aria-label="Rated {{ rating }} out of 5">
+  {%- for i in range(1, 6) -%}
+  <svg class="star{% if i <= rating %} star--on{% endif %}"
+       width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 2.8l2.83 5.73 6.32.92-4.57 4.46 1.08 6.3L12 17.24l-5.66 2.97 1.08-6.3-4.57-4.46 6.32-.92z"/>
+  </svg>
+  {%- endfor -%}
+</span>
+{% endmacro %}
+
+{# One published review. #}
+{% macro review_card(review) %}
+<article class="review">
+  {{ stars(review.rating) }}
+  {# review_html applies the active security-lab level (escaped when secure). #}
+  <blockquote class="review__body">{{ review.body | review_html }}</blockquote>
+  <footer class="review__meta">
+    <span class="review__name">{{ review.name }}</span>
+    {%- if review.location %}<span class="review__place">{{ review.location }}</span>{% endif %}
+    <time class="review__date" datetime="{{ review.submitted_at.strftime('%Y-%m-%d') }}">
+      {{ review.submitted_at.strftime('%d %b %Y') }}
+    </time>
+  </footer>
+</article>
+{% endmacro %}

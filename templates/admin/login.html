@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Staff login – AmberStream{% endblock %}
+{% block heading %}Staff login{% endblock %}
+
+{% block content %}
+  {% if msg %}
+    <div class="alert alert--err" role="alert" style="margin-bottom:var(--s-5);">{{ msg }}</div>
+  {% endif %}
+
+  <form method="POST" class="stack" autocomplete="on">
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn--primary btn--block" style="margin-top:var(--s-2);">Log in</button>
+  </form>
+
+  <p class="small-print" style="margin-top:var(--s-5);">
+    This console is for AmberStream staff. Rate changes published here appear on the public
+    site immediately.
+  </p>
+{% endblock %}
