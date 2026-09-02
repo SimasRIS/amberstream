@@ -38,6 +38,7 @@ desktop.ini
 # Environment variables
 .env
 .env.local
+deploy/amberstream.env
 
 # Production
 *.pid
