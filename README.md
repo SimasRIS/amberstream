@@ -31,7 +31,8 @@ intentionally bypassable blocklist. There is no on-page warning and no way to
 disable it; the app is a fixed vulnerable target.
 
 Full details, the bypass payload and the fix are in
-**[SECURITY_LAB.md](SECURITY_LAB.md)** and **AmberStream_Vulnerabilities.docx**.
+**[SECURITY_LAB.md](SECURITY_LAB.md)**. The `AmberStream_Vulnerabilities.docx`
+write-up is distributed separately and is not part of this repository.
 
 ## Host it on the VM (Ubuntu 24.04 desktop)
 
