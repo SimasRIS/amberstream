@@ -84,9 +84,23 @@ if ! sudo apt-get update -qq; then
 OFFLINE
     exit 1
 fi
-# iproute2 provides `ip`, which start.sh uses to find this VM's lab address.
-# Present on the desktop image, but not on every minimal or server variant.
+# python3          the interpreter itself (present on the desktop image, but
+#                  not on every minimal or server variant)
+# python3-venv     needed to create the virtualenv; NOT installed by default
+# python3-pip      needed to install the dependencies into it
+# iproute2         provides `ip`, which start.sh uses to find this VM's address
 sudo apt-get install -y -qq python3 python3-venv python3-pip iproute2
+
+# app.py imports datetime.UTC, which does not exist before Python 3.11, so an
+# older base image fails at import with a confusing ImportError. Ubuntu 24.04
+# ships 3.12 and is fine; check anyway so a wrong base image says so plainly.
+PY_VER="$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')"
+if ! python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)'; then
+    echo "    Python ${PY_VER} is too old - this app needs 3.11 or newer." >&2
+    echo "    Ubuntu 24.04 ships 3.12. Check the base image for this VM." >&2
+    exit 1
+fi
+echo "    python3 ${PY_VER}, venv and pip installed"
 
 # --- 2. Virtualenv ------------------------------------------------------
 echo "==> Creating virtualenv at ${APPDIR}/.venv"

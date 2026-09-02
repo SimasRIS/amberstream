@@ -1,3 +1,5 @@
+# Python 3.11+ (app.py imports datetime.UTC). Ubuntu 24.04 ships 3.12.
+# The interpreter itself is installed by deploy/install.sh, not from here.
 flask
 flask-login
 flask-sqlalchemy
