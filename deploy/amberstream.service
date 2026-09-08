@@ -1,0 +1,39 @@
+# systemd unit for the AmberStream training lab.
+# install.sh fills in the service user, group and application directory before
+# installing the result to /etc/systemd/system/amberstream.service. Do not run
+# this copy directly.
+
+[Unit]
+Description=AmberStream Energy — security training lab (deliberately vulnerable)
+Documentation=file://__APPDIR__/SECURITY_LAB.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+User=__USER__
+Group=__GROUP__
+WorkingDirectory=__APPDIR__
+EnvironmentFile=__APPDIR__/deploy/amberstream.env
+
+# start.sh resolves which address to bind (lab VMs are cloned from one image and
+# each gets a different address in the 100.10X.13.64 range), then execs gunicorn.
+ExecStart=__APPDIR__/deploy/start.sh
+Restart=on-failure
+RestartSec=3
+
+# Lets PORT=80 work without running the whole service as root.
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+# Modest hardening. The app still needs to write instance/plans.db.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=__APPDIR__/instance
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

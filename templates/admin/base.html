@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}AmberStream Staff{% endblock %}</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="{{ url_for('static', filename='amberstream.png') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="admin-body">
+
+<div class="admin-shell {% block shell_class %}{% endblock %}">
+  <div class="admin-card">
+    <div class="admin-card__head">
+      <img src="{{ url_for('static', filename='amberstream.png') }}" alt="" width="56" height="56">
+      <div>
+        <span>Staff console</span>
+        <h1>{% block heading %}AmberStream{% endblock %}</h1>
+      </div>
+    </div>
+    <div class="admin-card__body">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <p class="text-center small-print" style="margin-top:var(--s-5);">
+    <a href="{{ url_for('home') }}">← Back to amberstream.lt</a>
+  </p>
+</div>
+
+</body>
+</html>

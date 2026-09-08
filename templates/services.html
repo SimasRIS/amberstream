@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Services – AmberStream Energy{% endblock %}
+{% block description %}Transmission-level and retail energy services across the Baltics: interconnection studies, grid connection, industrial metering, demand response and outage support.{% endblock %}
+
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--amber);">Services</p>
+    <h1>From a household meter to a 330 kV tie-in.</h1>
+    <p>AmberStream provides transmission-level and retail services across the Baltic region,
+       connecting homes, businesses and industry to a reliable 110/330 kV network.</p>
+  </div>
+</section>
+
+{# ---------- Supply ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Supply</p>
+      <h2>Residential and business supply</h2>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card">
+        <h3>Standard and green plans</h3>
+        <p>Fixed-rate and 100% renewable options for households and micro-businesses.</p>
+      </article>
+      <article class="card">
+        <h3>Flexible tariffs</h3>
+        <p>Fixed or flexible pricing aligned with Nord Pool settlement periods.</p>
+      </article>
+      <article class="card">
+        <h3>Customer portal</h3>
+        <p>Billing, meter reads and usage history in one place, online.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ---------- Grid services ---------- #}
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="grid grid--sidebar">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Engineering</p>
+          <h2>Grid and engineering services</h2>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th scope="col">Service</th>
+                <th scope="col">What we deliver</th>
+                <th scope="col">Who it is for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowname">Interconnection studies</td>
+                <td>Feasibility, load flow, short-circuit and protection review for 10–110 kV tie-ins</td>
+                <td>Developers, large consumers</td>
+              </tr>
+              <tr>
+                <td class="rowname">Grid connection</td>
+                <td>Design coordination, bay allocations, relay settings, commissioning support</td>
+                <td>IPPs, industrial parks</td>
+              </tr>
+              <tr>
+                <td class="rowname">Industrial metering</td>
+                <td>Class-A meters, CT/VT selection, remote reads, settlement data exports</td>
+                <td>Manufacturing, logistics hubs</td>
+              </tr>
+              <tr>
+                <td class="rowname">Demand response</td>
+                <td>Peak-shaving programmes, automated signals, incentive settlements</td>
+                <td>SMEs, large commercial</td>
+              </tr>
+              <tr>
+                <td class="rowname">Outage &amp; reliability</td>
+                <td>Planned maintenance windows, fault location, restoration coordination</td>
+                <td>All customers</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="aside">
+          <h3>Grid services</h3>
+          <ul>
+            <li>Industrial metering</li>
+            <li>Peak load advisory</li>
+            <li>Interconnect studies</li>
+          </ul>
+        </div>
+        <div class="aside">
+          <h3>Support</h3>
+          <p>
+            24/7 outage hotline<br>
+            <span class="mono">+370 000 00X01</span>
+          </p>
+          <p style="margin-top:var(--s-3);"><a href="{{ url_for('contact_page') }}">All contact details →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Storage & e-mobility ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--2">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Renewables &amp; storage</p>
+          <h2>Integration services</h2>
+        </div>
+        <p>
+          SCADA-controlled hydro storage provides peak support and reserve operations for the
+          regional grid — the same asset that generates the electricity we sell.
+        </p>
+        <p><a href="{{ url_for('about_page') }}">How AmberFalls works →</a></p>
+      </div>
+
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">E-mobility &amp; efficiency</p>
+          <h2>Using less, and using it better</h2>
+        </div>
+        <ul class="plan__features" style="margin-bottom:0;">
+          <li>EV charging: site survey, load assessment, smart scheduling</li>
+          <li>Energy audits: lighting, HVAC, process optimisation</li>
+          <li>Sub-metering and power-quality reports — harmonics, flicker, voltage dips</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Plan overview ---------- #}
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">At a glance</p>
+      <h2>Plan overview</h2>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th scope="col">Plan</th>
+            <th scope="col">Tariff</th>
+            <th scope="col">Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plan in plans %}
+          <tr>
+            <td class="rowname">{{ plan.name }}</td>
+            <td class="num">€{{ '%.2f'|format(plan.price) }} / kWh</td>
+            <td>{{ plan_audience.get(plan.name, 'Households and businesses') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:var(--s-4);"><a href="{{ url_for('plans_page') }}">Full plan details and time-of-use rates →</a></p>
+  </div>
+</section>
+
+{# ---------- Get started ---------- #}
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="grid grid--3">
+      <article class="card">
+        <h3>New connections &amp; studies</h3>
+        <p><a href="mailto:sales@amberstream.lt">sales@amberstream.lt</a></p>
+      </article>
+      <article class="card">
+        <h3>24/7 support &amp; outages</h3>
+        <p class="mono">+370 000 00X01</p>
+      </article>
+      <article class="card">
+        <h3>Customer portal</h3>
+        <p><a href="{{ url_for('plans_page') }}">View plans &amp; pay your bill</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+# These files are consumed by Linux: a CRLF shebang makes the kernel look for
+# an interpreter literally named "bash\r", and systemd chokes on CRLF in a unit
+# file. Pin them to LF so they survive a clone from any client, whatever that
+# client's core.autocrlf happens to be set to.
+*.sh              text eol=lf
+*.service         text eol=lf
+*.env.example     text eol=lf
+
+# Binary assets: never touch these.
+*.png  binary
+*.jpg  binary
+*.docx binary
+*.db   binary

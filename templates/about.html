@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}About – AmberStream Energy{% endblock %}
+{% block description %}AmberStream Energy operates the AmberFalls hydroelectric dam and develops transmission infrastructure across Lithuania, Latvia and Estonia.{% endblock %}
+
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--amber);">About us</p>
+    <h1>We generate power, and we keep the grid that carries it standing up.</h1>
+    <p>AmberStream Energy operates and develops transmission networks across the Baltic region.
+       Our focus is dependable delivery, grid safety, and practical innovation that benefits
+       homes, businesses and industry.</p>
+  </div>
+</section>
+
+{# ---------- The dam ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--sidebar">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">AmberFalls</p>
+          <h2>A hydro storage plant that works as a battery.</h2>
+        </div>
+
+        <p>
+          Our hydro storage assets help stabilise the grid: water is pumped uphill and stored
+          when demand is low, then released through turbines when demand peaks. That makes
+          AmberFalls both a generator and one of the largest storage devices in the region.
+        </p>
+        <p>
+          The plant's 174 MW rating describes instantaneous power — the output at a given
+          moment, not energy per hour. Running at full output it produces roughly
+          <span class="mono">4,176 MWh</span> in a 24-hour period.
+        </p>
+
+        <figure class="figure" style="margin-block:var(--s-6);">
+          <img src="{{ url_for('static', filename='hydro1.jpg') }}"
+               alt="The AmberFalls hydro storage plant seen from downstream" loading="lazy">
+          <figcaption>AmberFalls hydro storage plant — overview.</figcaption>
+        </figure>
+
+        <div class="grid grid--2">
+          <figure class="figure">
+            <img src="{{ url_for('static', filename='hydro2.jpg') }}"
+                 alt="Upper reservoir and penstocks at AmberFalls" loading="lazy">
+            <figcaption>Upper reservoir and penstocks.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="{{ url_for('static', filename='amberstreamhq.jpg') }}"
+                 alt="AmberStream Energy headquarters and control facility" loading="lazy">
+            <figcaption>Control facility and headquarters.</figcaption>
+          </figure>
+        </div>
+
+        <h2 style="margin-top:var(--s-8);">How pumped storage works</h2>
+        <p>A short explainer on the mechanics behind the plant.</p>
+        <div class="media-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/l1AmgAVRxUI?rel=0&amp;modestbranding=1"
+            title="Hydro storage explainer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            loading="lazy"
+            allowfullscreen></iframe>
+        </div>
+        <p class="small-print" style="margin-top:var(--s-2);">
+          Video hosted on YouTube.
+          <a href="https://www.youtube.com/watch?v=l1AmgAVRxUI" target="_blank" rel="noopener">Watch on YouTube →</a>
+        </p>
+      </div>
+
+      <div>
+        <div class="aside">
+          <h3>Quick links</h3>
+          <ul>
+            <li><a href="{{ url_for('plans_page') }}">Electricity plans</a></li>
+            <li><a href="{{ url_for('news_page') }}">Outages &amp; maintenance</a></li>
+            <li><a href="{{ url_for('sustainability_page') }}">Sustainability targets</a></li>
+            <li><a href="{{ url_for('contact_page') }}">Careers &amp; contact</a></li>
+          </ul>
+        </div>
+        <div class="aside">
+          <h3>Head office</h3>
+          <p>
+            AmberStream Energy<br>
+            Vilnius, Lithuania<br>
+            <a href="mailto:info@amberstream.lt">info@amberstream.lt</a><br>
+            <span class="mono">+370 000 00X01</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Key numbers ---------- #}
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Key numbers</p>
+      <h2>AmberFalls in figures</h2>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data">
+        <tbody>
+          <tr>
+            <td class="rowname">Installed capacity</td>
+            <td class="num">174 MW (174,000 kW)</td>
+          </tr>
+          <tr>
+            <td class="rowname">Instantaneous output</td>
+            <td>Power at a moment in time — not energy “per hour”</td>
+          </tr>
+          <tr>
+            <td class="rowname">Energy at full output</td>
+            <td class="num">4,176 MWh / day</td>
+          </tr>
+          <tr>
+            <td class="rowname">Estimated annual generation</td>
+            <td class="num">762,120 MWh / yr (~50% capacity factor)</td>
+          </tr>
+          <tr>
+            <td class="rowname">Homes powered</td>
+            <td class="num">~190,530–254,040 / yr (3–4 MWh per home)</td>
+          </tr>
+          <tr>
+            <td class="rowname">CO₂ avoided</td>
+            <td class="num">~228,636 tonnes / yr (vs. 300 kg/MWh grid)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{# ---------- Mission ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Our mission</p>
+      <h2>Three commitments we are measured against.</h2>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card">
+        <h3>Deliver reliably</h3>
+        <p>Safe, dependable electricity across interconnected Baltic networks, year-round.</p>
+      </article>
+      <article class="card">
+        <h3>Invest in capacity</h3>
+        <p>Storage, grid upgrades and cross-border capacity that make more renewables possible.</p>
+      </article>
+      <article class="card">
+        <h3>Communicate plainly</h3>
+        <p>Straightforward plans and clear communication — including when something goes wrong.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

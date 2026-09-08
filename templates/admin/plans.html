@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Edit rates – AmberStream{% endblock %}
+{% block heading %}Electricity rates{% endblock %}
+{% block shell_class %}admin-shell--wide{% endblock %}
+
+{% block content %}
+  {% if msg %}
+    <div class="alert alert--ok" role="status" style="margin-bottom:var(--s-5);">{{ msg }}</div>
+  {% endif %}
+
+  <p class="small-print" style="margin-top:0;">
+    Signed in as <strong>{{ current_user.username }}</strong>. Changes go live on the public
+    site as soon as you save.
+  </p>
+
+  <form method="POST" style="margin-top:var(--s-5);">
+    <div class="table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th scope="col">Plan</th>
+            <th scope="col">Energy rate (€ / kWh)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plan in plans %}
+          <tr>
+            <td class="rowname">
+              <label for="price_{{ plan.id }}">{{ plan.name }}</label>
+            </td>
+            <td>
+              <div class="row" style="gap:var(--s-2); flex-wrap:nowrap;">
+                <input class="num-input"
+                       id="price_{{ plan.id }}"
+                       name="price_{{ plan.id }}"
+                       type="number"
+                       inputmode="decimal"
+                       step="0.01"
+                       min="0"
+                       value="{{ '%.2f'|format(plan.price) }}"
+                       required>
+                <span class="small-print">€/kWh</span>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <button type="submit" class="btn btn--primary" style="margin-top:var(--s-5);">Save rates</button>
+  </form>
+
+  <p class="admin-meta">
+    Last updated:
+    {{ meta.last_updated.strftime('%Y-%m-%d %H:%M:%S') ~ ' UTC' if meta else 'unknown' }}
+  </p>
+
+  <div class="admin-foot">
+    <a class="btn btn--secondary" href="{{ url_for('reviews_admin') }}">Moderate reviews</a>
+    <a class="btn btn--secondary" href="{{ url_for('change_password') }}">Change password</a>
+    <a class="btn btn--danger" href="{{ url_for('logout') }}">Log out</a>
+  </div>
+{% endblock %}

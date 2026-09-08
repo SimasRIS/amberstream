@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Contact – AmberStream Energy{% endblock %}
+{% block description %}Reach AmberStream Energy: customer care, business sales, press and the 24/7 outage hotline. Offices in Vilnius, Lithuania.{% endblock %}
+
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--amber);">Contact</p>
+    <h1>Talk to a person in Vilnius.</h1>
+    <p>We are a small team. Email usually gets a reply the same working day; the outage
+       hotline is answered around the clock.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--sidebar">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Departments</p>
+          <h2>Who to write to</h2>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="card">
+            <h3>Customer care</h3>
+            <p>Billing questions, meter reads, moving home.</p>
+            <p><a href="mailto:support@amberstream.lt">support@amberstream.lt</a></p>
+          </article>
+          <article class="card">
+            <h3>Business sales</h3>
+            <p>New connections, tariffs, PPAs and studies.</p>
+            <p><a href="mailto:sales@amberstream.lt">sales@amberstream.lt</a></p>
+          </article>
+          <article class="card">
+            <h3>Press</h3>
+            <p>Media enquiries and interview requests.</p>
+            <p><a href="mailto:press@amberstream.lt">press@amberstream.lt</a></p>
+          </article>
+        </div>
+
+        <div class="section-head" style="margin-top:var(--s-8);">
+          <p class="eyebrow">Emergencies</p>
+          <h2>Outages and safety</h2>
+        </div>
+
+        <div class="callout">
+          <h3>Report an outage or a hazard</h3>
+          <p>
+            If you can see a downed line, sparking equipment or flooding near an installation,
+            call the hotline immediately — do not email. Stay well clear of the equipment.
+          </p>
+          <p style="margin-top:var(--s-3);">
+            <a class="btn btn--primary" href="tel:+37000000X01">Call +370 000 00X01</a>
+          </p>
+        </div>
+
+        <div class="table-scroll" style="margin-top:var(--s-6);">
+          <table class="data">
+            <caption>Direct lines and hours.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Line</th>
+                <th scope="col">Number</th>
+                <th scope="col">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowname">Outage hotline</td>
+                <td class="num">+370 000 00X01</td>
+                <td>24 / 7</td>
+              </tr>
+              <tr>
+                <td class="rowname">Billing</td>
+                <td class="num">+370 000 00X02</td>
+                <td>Mon–Fri 09:00–17:00</td>
+              </tr>
+              <tr>
+                <td class="rowname">Press office</td>
+                <td class="num">+370 000 00X03</td>
+                <td>Mon–Fri 09:00–17:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="aside">
+          <h3>Head office</h3>
+          <p>
+            AmberStream Energy<br>
+            Vilnius, Lithuania<br>
+            <a href="mailto:info@amberstream.lt">info@amberstream.lt</a>
+          </p>
+        </div>
+        <div class="aside">
+          <h3>Opening hours</h3>
+          <p class="mono">Mon–Fri&nbsp;&nbsp;09:00–17:00</p>
+          <p class="small-print" style="margin-top:var(--s-2);">Closed on Lithuanian public holidays.</p>
+        </div>
+        <div class="aside">
+          <h3>Thinking of switching?</h3>
+          <p>Compare the current rates before you write in.</p>
+          <p style="margin-top:var(--s-3);">
+            <a class="btn btn--secondary btn--block" href="{{ url_for('plans_page') }}">See plans</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

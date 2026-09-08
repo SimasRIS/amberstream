@@ -1,0 +1,87 @@
+{% extends "admin/base.html" %}
+{% from "_macros.html" import stars %}
+
+{% block title %}Moderate reviews – AmberStream{% endblock %}
+{% block heading %}Customer reviews{% endblock %}
+{% block shell_class %}admin-shell--wide{% endblock %}
+
+{% block content %}
+  {% if msg %}
+    <div class="alert alert--ok" role="status" style="margin-bottom:var(--s-5);">{{ msg }}</div>
+  {% endif %}
+
+  {# ---------- Awaiting approval ---------- #}
+  <h2 class="mod-heading">
+    Awaiting approval
+    <span class="mod-count{% if pending %} mod-count--alert{% endif %}">{{ pending|length }}</span>
+  </h2>
+
+  {% if pending %}
+    <p class="small-print" style="margin-top:0;">These are not visible on the public site yet.</p>
+    <div class="stack">
+      {% for review in pending %}
+      <article class="mod-item">
+        <div class="mod-item__head">
+          {{ stars(review.rating) }}
+          <span class="mod-item__who">
+            {{ review.name }}{% if review.location %} · {{ review.location }}{% endif %}
+          </span>
+          <time class="mod-item__date mono">{{ review.submitted_at.strftime('%Y-%m-%d %H:%M') }}</time>
+        </div>
+        <p class="mod-item__body">{{ review.body | review_html }}</p>
+        <div class="mod-item__actions">
+          <form method="POST" action="{{ url_for('review_action', review_id=review.id, action='approve') }}">
+            <button type="submit" class="btn btn--primary btn--sm">Publish</button>
+          </form>
+          <form method="POST" action="{{ url_for('review_action', review_id=review.id, action='delete') }}"
+                onsubmit="return confirm('Delete this review permanently?');">
+            <button type="submit" class="btn btn--danger btn--sm">Delete</button>
+          </form>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="small-print">Nothing waiting. New reviews will appear here.</p>
+  {% endif %}
+
+  {# ---------- Published ---------- #}
+  <h2 class="mod-heading" style="margin-top:var(--s-7);">
+    Published
+    <span class="mod-count">{{ published|length }}</span>
+  </h2>
+
+  {% if published %}
+    <div class="stack">
+      {% for review in published %}
+      <article class="mod-item mod-item--live">
+        <div class="mod-item__head">
+          {{ stars(review.rating) }}
+          <span class="mod-item__who">
+            {{ review.name }}{% if review.location %} · {{ review.location }}{% endif %}
+          </span>
+          <time class="mod-item__date mono">{{ review.submitted_at.strftime('%Y-%m-%d %H:%M') }}</time>
+        </div>
+        <p class="mod-item__body">{{ review.body | review_html }}</p>
+        <div class="mod-item__actions">
+          <form method="POST" action="{{ url_for('review_action', review_id=review.id, action='hide') }}">
+            <button type="submit" class="btn btn--secondary btn--sm">Hide</button>
+          </form>
+          <form method="POST" action="{{ url_for('review_action', review_id=review.id, action='delete') }}"
+                onsubmit="return confirm('Delete this review permanently?');">
+            <button type="submit" class="btn btn--danger btn--sm">Delete</button>
+          </form>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="small-print">No reviews published yet.</p>
+  {% endif %}
+
+  <div class="admin-foot">
+    <a class="btn btn--secondary" href="{{ url_for('plans_admin') }}">← Rates</a>
+    <a class="btn btn--secondary" href="{{ url_for('reviews_page') }}">View public page</a>
+    <a class="btn btn--danger" href="{{ url_for('logout') }}">Log out</a>
+  </div>
+{% endblock %}

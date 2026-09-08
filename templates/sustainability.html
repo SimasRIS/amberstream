@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Sustainability – AmberStream Energy{% endblock %}
+{% block description %}AmberStream's 2026 and 2030 targets for CO₂ intensity, renewable integration capacity, storage availability and grid loss reduction across the Baltics.{% endblock %}
+
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--amber);">Sustainability</p>
+    <h1>A low-carbon Baltic power system, on a published timetable.</h1>
+    <p>We develop and operate infrastructure across Lithuania, Latvia and Estonia: integrating
+       renewables, expanding cross-border capacity, and modernising the grid for flexibility
+       and reliability year-round.</p>
+  </div>
+</section>
+
+{# ---------- Targets ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Targets</p>
+      <h2>What we have committed to, and by when.</h2>
+      <p class="lede">
+        These are the four measures we report against. Where a target is directional rather
+        than absolute, we say so rather than inventing a number.
+      </p>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th scope="col">Area</th>
+            <th scope="col">2026 target</th>
+            <th scope="col">2030 target</th>
+            <th scope="col">How we get there</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rowname">CO₂ intensity <span class="small-print">(scope 2, grid ops)</span></td>
+            <td class="num">&lt; 95 g/kWh</td>
+            <td class="num">&lt; 60 g/kWh</td>
+            <td>Renewables, storage and interconnects</td>
+          </tr>
+          <tr>
+            <td class="rowname">Renewable integration capacity</td>
+            <td class="num">+600 MW</td>
+            <td class="num">+1.5 GW</td>
+            <td>Connection bays, grid-forming inverters</td>
+          </tr>
+          <tr>
+            <td class="rowname">Storage availability</td>
+            <td class="num">250 MWh</td>
+            <td class="num">700 MWh</td>
+            <td>Pumped storage and battery hybrids</td>
+          </tr>
+          <tr>
+            <td class="rowname">Loss reduction</td>
+            <td class="num">−0.3 pp</td>
+            <td class="num">−0.8 pp</td>
+            <td>Reconductoring, VAR support, automation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{# ---------- Current KPIs ---------- #}
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Current performance</p>
+      <h2>Where we stand today.</h2>
+    </div>
+
+    <div class="grid grid--3">
+      <div class="stat">
+        <span class="stat__value">98.4<span class="stat__unit">%</span></span>
+        <span class="stat__label">Renewable availability</span>
+        <div class="meter__track" style="margin-top:var(--s-4);">
+          <div class="meter__fill" style="width:98.4%;"></div>
+        </div>
+      </div>
+      <div class="stat">
+        <span class="stat__value">Improving</span>
+        <span class="stat__label">Grid interruptions (SAIDI), year on year</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">Improving</span>
+        <span class="stat__label">Energy losses, following reconductoring</span>
+      </div>
+    </div>
+
+    <p class="small-print" style="margin-top:var(--s-4);">
+      SAIDI and loss figures are reported as year-on-year direction pending audit of the current period.
+    </p>
+  </div>
+</section>
+
+{# ---------- Projects ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--sidebar">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Programme</p>
+          <h2>Key grid projects across the Baltics</h2>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Scope</th>
+                <th scope="col">Benefit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowname">110/330 kV substation upgrades</td>
+                <td>New bays, digital relays, SCADA upgrades</td>
+                <td>Higher renewable hosting capacity</td>
+              </tr>
+              <tr>
+                <td class="rowname">Cross-border capacity enhancements</td>
+                <td>Interconnect optimisation, phase-shifting</td>
+                <td>Market integration, security of supply</td>
+              </tr>
+              <tr>
+                <td class="rowname">Flexible resources programme</td>
+                <td>Demand-response aggregation, industrial peak-shaving</td>
+                <td>Lower system peaks, improved stability</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 style="margin-top:var(--s-8);">What customers can do</h2>
+        <p>
+          The cheapest megawatt-hour is the one nobody needs to generate. Smart thermostats and
+          scheduled EV charging shift load away from system peaks — which lowers your bill and
+          our carbon intensity at the same time.
+        </p>
+        <p>
+          <a href="{{ url_for('plans_page') }}">See the time-of-use tariff →</a>
+        </p>
+      </div>
+
+      <div>
+        <div class="aside">
+          <h3>Portfolio</h3>
+          <p>Hydro storage for peak support and frequency response, SCADA-controlled.</p>
+        </div>
+        <div class="aside">
+          <h3>Interconnects</h3>
+          <ul>
+            <li>NordBalt</li>
+            <li>LitPol Link</li>
+            <li>EstLink</li>
+          </ul>
+        </div>
+        <div class="aside">
+          <h3>Contact</h3>
+          <p><a href="mailto:sustainability@amberstream.lt">sustainability@amberstream.lt</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- CTA ---------- #}
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="callout callout--water row" style="justify-content:space-between;">
+      <div style="flex:1 1 24rem;">
+        <h3>Partner with us</h3>
+        <p>Developers and municipalities: get in touch about connection studies, storage siting
+           or pilot programmes.</p>
+      </div>
+      <a class="btn btn--primary" href="mailto:sustainability@amberstream.lt">Email the team</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

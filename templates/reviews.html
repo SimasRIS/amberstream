@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stars, review_card %}
+
+{% block title %}Customer reviews – AmberStream Energy{% endblock %}
+{% block description %}What AmberStream customers say about switching, billing and support. Read reviews from households and businesses across the Baltics, and leave your own.{% endblock %}
+
+{% block content %}
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--amber);">Customer reviews</p>
+    <h1>What our customers say.</h1>
+    <p>Unedited reviews from AmberStream customers. We check each one for spam before
+       publishing, but we do not remove reviews for being critical.</p>
+
+    {% if summary.count %}
+    <div class="rating-summary">
+      {{ stars(summary.average|round|int, 20) }}
+      <span class="rating-summary__score mono">{{ summary.average }} / 5</span>
+      <span class="rating-summary__count">from {{ summary.count }} review{{ '' if summary.count == 1 else 's' }}</span>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--sidebar" style="--side-w:400px;">
+
+      {# ---------- Published reviews ---------- #}
+      <div>
+        {% if sent %}
+        <div class="alert alert--ok" role="status" style="margin-bottom:var(--s-5);">
+          Thank you — your review has been sent to our team and will appear here once checked.
+        </div>
+        {% endif %}
+
+        {% if reviews %}
+          <div class="section-head">
+            <p class="eyebrow">Published</p>
+            <h2>{{ reviews|length }} review{{ '' if reviews|length == 1 else 's' }}</h2>
+          </div>
+          <div class="stack">
+            {% for review in reviews %}{{ review_card(review) }}{% endfor %}
+          </div>
+        {% else %}
+          <div class="callout callout--water">
+            <h3>No reviews published yet</h3>
+            <p>Be the first to tell other Baltic households what switching to AmberStream
+               was like. Use the form to leave a review.</p>
+          </div>
+        {% endif %}
+      </div>
+
+      {# ---------- Submission form ---------- #}
+      <div>
+        <div class="aside" id="write">
+          <h3>Leave a review</h3>
+
+          {% if errors %}
+          <div class="alert alert--err" role="alert" style="margin-bottom:var(--s-4);">
+            Please check the highlighted fields.
+          </div>
+          {% endif %}
+
+          <form method="POST" action="{{ url_for('reviews_page') }}#write" class="stack" novalidate>
+            <div class="field">
+              <label for="rv-rating">Your rating</label>
+              <select id="rv-rating" name="rating" required
+                      {% if errors.rating %}aria-invalid="true"{% endif %}>
+                <option value="">Choose a rating…</option>
+                {% for n in [5, 4, 3, 2, 1] %}
+                <option value="{{ n }}" {% if form.rating|string == n|string %}selected{% endif %}>
+                  {{ n }} — {{ {5:'Excellent', 4:'Good', 3:'Okay', 2:'Poor', 1:'Bad'}[n] }}
+                </option>
+                {% endfor %}
+              </select>
+              {% if errors.rating %}<span class="field__error">{{ errors.rating }}</span>{% endif %}
+            </div>
+
+            <div class="field">
+              <label for="rv-name">Your name</label>
+              <input id="rv-name" name="name" type="text" maxlength="{{ limits.name }}"
+                     value="{{ form.name }}" required
+                     {% if errors.name %}aria-invalid="true"{% endif %}>
+              {% if errors.name %}<span class="field__error">{{ errors.name }}</span>{% endif %}
+            </div>
+
+            <div class="field">
+              <label for="rv-location">Town <span class="field__hint">(optional)</span></label>
+              <input id="rv-location" name="location" type="text" maxlength="{{ limits.location }}"
+                     value="{{ form.location }}" placeholder="Vilnius"
+                     {% if errors.location %}aria-invalid="true"{% endif %}>
+              {% if errors.location %}<span class="field__error">{{ errors.location }}</span>{% endif %}
+            </div>
+
+            <div class="field">
+              <label for="rv-body">Your review</label>
+              <textarea id="rv-body" name="body" rows="6" maxlength="{{ limits.body }}" required
+                        {% if errors.body %}aria-invalid="true"{% endif %}>{{ form.body }}</textarea>
+              <span class="field__hint">At least {{ body_min }} characters, up to {{ limits.body }}.</span>
+              {% if errors.body %}<span class="field__error">{{ errors.body }}</span>{% endif %}
+            </div>
+
+            {# Honeypot — hidden from people, catches bots that fill every field. #}
+            <div class="hp" aria-hidden="true">
+              <label for="rv-website">Website</label>
+              <input id="rv-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--block">Submit review</button>
+            <p class="small-print" style="margin:0;">
+              Your name and town are published with your review. Do not include account
+              numbers or other personal details.
+            </p>
+          </form>
+        </div>
+
+        <div class="aside">
+          <h3>Need help instead?</h3>
+          <p>A review is not the fastest way to solve a problem — our team answers email the
+             same working day.</p>
+          <p style="margin-top:var(--s-3);">
+            <a class="btn btn--secondary btn--block" href="{{ url_for('contact_page') }}">Contact support</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

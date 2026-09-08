@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% from "_macros.html" import review_card %}
+
+{% block title %}AmberStream Energy – Clean local hydro from the AmberFalls dam{% endblock %}
+{% block description %}AmberStream supplies clean electricity generated at the 174 MW AmberFalls hydroelectric dam, with transparent rates and no hidden fees across the Baltic region.{% endblock %}
+
+{% block content %}
+
+{# ---------- Hero ---------- #}
+<section class="hero">
+  {# hydro1 is the only asset wide enough for a full-bleed hero (1400px);
+     amberstreamhq.jpg is 474px and visibly upscaled here. #}
+  <img class="hero__media" src="{{ url_for('static', filename='hydro1.jpg') }}" alt="" fetchpriority="high">
+  <div class="wrap hero__inner">
+    <p class="eyebrow" style="color:var(--amber);">Vilnius · Lithuania</p>
+    <h1>Power that comes<br>from the <em>river</em>.</h1>
+    <p class="hero__lede">
+      We run the AmberFalls hydroelectric dam and sell what it generates directly to
+      Baltic homes and businesses — no fuel, no middlemen, no hidden fees.
+    </p>
+
+    <div class="hero__rate">
+      <span class="hero__rate-value js-rate">—</span>
+      <span class="hero__rate-label">Our lowest residential rate</span>
+    </div>
+
+    <div class="hero__actions">
+      <a class="btn btn--on-dark" href="{{ url_for('plans_page') }}">See electricity plans</a>
+      <a class="btn btn--ghost-light" href="{{ url_for('about_page') }}">How the dam works</a>
+    </div>
+  </div>
+</section>
+
+{# ---------- Plans ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Residential plans</p>
+      <h2>Three plans. One page of small print.</h2>
+      <p class="lede">
+        Every rate below is what you pay for energy supply. Network charges and taxes
+        are listed separately on your bill, never folded in to look cheaper.
+      </p>
+    </div>
+
+    <div class="grid grid--3">
+      {% for plan in plans %}
+      <article class="plan{% if plan.id == cheapest_id %} plan--best{% endif %}">
+        {% if plan.id == cheapest_id %}<span class="plan__flag">Best value</span>{% endif %}
+        <h3 class="plan__name">{{ plan.name }}</h3>
+        <p class="plan__price">
+          <span class="plan__price-value">€{{ '%.2f'|format(plan.price) }}</span>
+          <span class="plan__price-unit">per kWh</span>
+        </p>
+        <ul class="plan__features">
+          {% for feature in plan_features.get(plan.name, default_features) %}
+          <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        <a class="btn btn--{% if plan.id == cheapest_id %}primary{% else %}secondary{% endif %} btn--block"
+           href="{{ url_for('contact_page') }}">Switch to {{ plan.name }}</a>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if meta %}
+    <p class="small-print mono" style="margin-top:var(--s-4);">
+      Rates last updated {{ meta.last_updated.strftime('%Y-%m-%d %H:%M') }} UTC
+    </p>
+    {% endif %}
+  </div>
+</section>
+
+{# ---------- The dam ---------- #}
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="grid grid--2" style="align-items:center; margin-bottom:var(--s-7);">
+      <div class="section-head" style="margin-bottom:0;">
+        <p class="eyebrow">AmberFalls hydroelectric dam</p>
+        <h2>One dam. Roughly a quarter of a million homes.</h2>
+        <p class="lede">
+          AmberFalls stores water behind the dam and releases it through turbines on demand.
+          Its 174 MW rating is instantaneous power — the output at a moment in time, not energy per hour.
+        </p>
+      </div>
+
+      <figure class="figure figure--natural" style="--img-w:474px;">
+        <img src="{{ url_for('static', filename='amberstreamhq.jpg') }}"
+             alt="The AmberStream Energy facility" width="474" height="251" loading="lazy">
+        <figcaption>The AmberStream Energy facility.</figcaption>
+      </figure>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat__value">174 <span class="stat__unit">MW</span></span>
+        <span class="stat__label">Installed capacity</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">762,120 <span class="stat__unit">MWh</span></span>
+        <span class="stat__label">Generated per year at ~50% capacity factor</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">228,636 <span class="stat__unit">t</span></span>
+        <span class="stat__label">CO₂ avoided per year vs. a 300 kg/MWh grid</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">190k–254k</span>
+        <span class="stat__label">Homes powered annually (3–4 MWh each)</span>
+      </div>
+    </div>
+
+    <p style="margin-top:var(--s-5);">
+      <a href="{{ url_for('about_page') }}">Read how pumped storage balances the Baltic grid →</a>
+    </p>
+  </div>
+</section>
+
+{# ---------- Why us ---------- #}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Why AmberStream</p>
+      <h2>A small Baltic utility that owns its own generation.</h2>
+    </div>
+
+    <div class="grid grid--4">
+      <article class="card">
+        <h3>Local and renewable</h3>
+        <p>Every kilowatt-hour we sell is generated at AmberFalls, not bought on a spot market and relabelled.</p>
+      </article>
+      <article class="card">
+        <h3>Transparent pricing</h3>
+        <p>One published rate per plan. Network charges and taxes stay on their own line of your bill.</p>
+      </article>
+      <article class="card">
+        <h3>Grid stability</h3>
+        <p>SCADA-controlled hydro storage supplies peak support and frequency response to the regional grid.</p>
+      </article>
+      <article class="card">
+        <h3>Support that answers</h3>
+        <p>A small team in Vilnius, reachable Mon–Fri 09:00–17:00, plus a 24/7 outage hotline.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ---------- News ---------- #}
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Latest news</p>
+      <h2>What we are working on now.</h2>
+    </div>
+
+    <div class="news-item">
+      <p class="news-item__meta">
+        2026-08-19
+        <span class="news-item__place">AmberFalls, LT</span>
+      </p>
+      <div>
+        <h3>Storage availability reaches 250 MWh</h3>
+        <p>The latest pumped-storage upgrade at AmberFalls brings dispatchable capacity to
+           250 MWh — the figure set out for 2026 in our sustainability plan.</p>
+        <a href="{{ url_for('sustainability_page') }}">See our 2026 targets →</a>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <p class="news-item__meta">
+        2026-07-30
+        <span class="news-item__place">Baltics</span>
+      </p>
+      <div>
+        <h3>Night rate of €0.09/kWh opens to all metered households</h3>
+        <p>Any customer with a smart meter can now move to the time-of-use tariff and pay
+           €0.09/kWh between 22:00 and 07:00 on weekdays.</p>
+        <a href="{{ url_for('plans_page') }}">Compare the tariffs →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------- Reviews ---------- #}
+{% if recent_reviews %}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Customer reviews</p>
+      <h2>In our customers' words.</h2>
+      {% if review_summary.average %}
+      <p class="lede">
+        Rated {{ review_summary.average }} out of 5 from
+        {{ review_summary.count }} review{{ '' if review_summary.count == 1 else 's' }}.
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="grid grid--3">
+      {% for review in recent_reviews %}{{ review_card(review) }}{% endfor %}
+    </div>
+
+    <p style="margin-top:var(--s-5);">
+      <a href="{{ url_for('reviews_page') }}">Read all reviews, or leave your own →</a>
+    </p>
+  </div>
+</section>
+{% endif %}
+
+{# ---------- Closing CTA ---------- #}
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="callout row" style="justify-content:space-between;">
+      <div style="flex:1 1 22rem;">
+        <h3>Ready to switch?</h3>
+        <p>Switching takes one email and about ten minutes. We handle the paperwork with your current supplier.</p>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('contact_page') }}">Start switching</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
